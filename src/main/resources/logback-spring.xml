@@ -38,7 +38,7 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="com.bleizing" level="trace" additivity="false">
+    <logger name="com.infosys" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
