@@ -1,4 +1,4 @@
-package com.infosys.sejuta_kebaikan_cms.model;
+package com.infosys.sejuta_kebaikan_cms.model.cms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.infosys.sejuta_kebaikan_cms.model.BaseModel;
+import com.infosys.sejuta_kebaikan_cms.model.Merchant;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -36,6 +38,10 @@ public class CmsUser extends BaseModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cms_role_id")
+	private CmsRole cmsRole;
 
 	public String getName() {
 		return name;
@@ -75,6 +81,14 @@ public class CmsUser extends BaseModel {
 
 	public void setMerchant(Merchant merchant) {
 		this.merchant = merchant;
+	}
+
+	public CmsRole getCmsRole() {
+		return cmsRole;
+	}
+
+	public void setCmsRole(CmsRole cmsRole) {
+		this.cmsRole = cmsRole;
 	}
 	
 }

@@ -15,14 +15,22 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.infosys.sejuta_kebaikan_cms.model.Campaign;
 import com.infosys.sejuta_kebaikan_cms.model.CampaignCategory;
-import com.infosys.sejuta_kebaikan_cms.model.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.model.Merchant;
 import com.infosys.sejuta_kebaikan_cms.model.User;
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsGroupMenu;
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsMenu;
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsRole;
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsRoleMenu;
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.repository.CampaignCategoryRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.CampaignRepository;
-import com.infosys.sejuta_kebaikan_cms.repository.CmsUserRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.MerchantRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.UserRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsGroupMenuRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsMenuRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsRoleMenuRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsRoleRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsUserRepository;
 import com.infosys.sejuta_kebaikan_cms.util.PasswordUtil;
 
 @SpringBootApplication
@@ -35,19 +43,23 @@ public class SejutaKebaikanCmsApplication {
 	}
 	
 	@Bean
-    ApplicationRunner init(CampaignCategoryRepository campaignCategoryRepository, UserRepository userRepository, CampaignRepository campaignRepository, MerchantRepository merchantRepository, CmsUserRepository cmsUserRepository) {
-        return (ApplicationArguments args) ->  initData(campaignCategoryRepository, userRepository, campaignRepository, merchantRepository, cmsUserRepository);
+    ApplicationRunner init(CampaignCategoryRepository campaignCategoryRepository, UserRepository userRepository, CampaignRepository campaignRepository, MerchantRepository merchantRepository, CmsUserRepository cmsUserRepository, CmsGroupMenuRepository cmsGroupMenuRepository, CmsMenuRepository cmsMenuRepository, CmsRoleRepository cmsRoleRepository, CmsRoleMenuRepository cmsRoleMenuRepository) {
+        return (ApplicationArguments args) ->  initData(campaignCategoryRepository, userRepository, campaignRepository, merchantRepository, cmsUserRepository, cmsGroupMenuRepository, cmsMenuRepository, cmsRoleRepository, cmsRoleMenuRepository);
         
     } 
 	
-	private void initData(CampaignCategoryRepository campaignCategoryRepository, UserRepository userRepository, CampaignRepository campaignRepository, MerchantRepository merchantRepository, CmsUserRepository cmsUserRepository) {
+	private void initData(CampaignCategoryRepository campaignCategoryRepository, UserRepository userRepository, CampaignRepository campaignRepository, MerchantRepository merchantRepository, CmsUserRepository cmsUserRepository, CmsGroupMenuRepository cmsGroupMenuRepository, CmsMenuRepository cmsMenuRepository, CmsRoleRepository cmsRoleRepository, CmsRoleMenuRepository cmsRoleMenuRepository) {
 		if (!isDataLoaded(userRepository)) {
 			logger.info("Init Data");
 			CampaignCategory campaignCategory = initCampaignCategory(campaignCategoryRepository);
 			User user = initUser(userRepository);
 			initCampaign(campaignRepository, campaignCategory, user);
 			Merchant merchant = initMerchant(merchantRepository);
-			initCmsUser(cmsUserRepository, merchant);
+			CmsGroupMenu cmsGroupMenu = initCmsGroupMenu(cmsGroupMenuRepository);
+			CmsMenu cmsMenu = initCmsMenu(cmsMenuRepository, cmsGroupMenu);
+			CmsRole cmsRole = initCmsRole(cmsRoleRepository);
+			initCmsRoleMenu(cmsRoleMenuRepository, cmsMenu, cmsRole);
+			initCmsUser(cmsUserRepository, merchant, cmsRole);
 		}
 		logger.info("Data Available");
 	}
@@ -146,7 +158,59 @@ public class SejutaKebaikanCmsApplication {
 		
 	}
 	
-	private void initCmsUser(CmsUserRepository cmsUserRepository, Merchant merchant) {
+	private CmsGroupMenu initCmsGroupMenu(CmsGroupMenuRepository cmsGroupMenuRepository) {
+		CmsGroupMenu cmsGroupMenu = new CmsGroupMenu();
+		cmsGroupMenu.setActive(true);
+		cmsGroupMenu.setName("CMS User");
+		
+		cmsGroupMenuRepository.save(cmsGroupMenu);
+
+		logger.info("Init Cms Group Menu Success");
+		
+		return cmsGroupMenu;
+	}
+	
+	private CmsMenu initCmsMenu(CmsMenuRepository cmsMenuRepository, CmsGroupMenu cmsGroupMenu) {
+		CmsMenu cmsMenu = new CmsMenu();
+		cmsMenu.setActive(true);
+		cmsMenu.setName("User CMS");
+		cmsMenu.setUrl("/pages/admin/list_user_cms");
+		cmsMenu.setLevel(1);
+		cmsMenu.setCmsGroupMenu(cmsGroupMenu);
+		
+		cmsMenuRepository.save(cmsMenu);
+
+		logger.info("Init Cms Menu Success");
+		
+		return cmsMenu;
+	}
+	
+	private CmsRole initCmsRole(CmsRoleRepository cmsRoleRepository) {
+		CmsRole cmsRole = new CmsRole();
+		cmsRole.setActive(true);
+		cmsRole.setName("Super Admin");
+		cmsRole.setCategory("ADMIN");
+		cmsRole.setMaster(true);
+		
+		cmsRoleRepository.save(cmsRole);
+
+		logger.info("Init Cms Role Success");
+		
+		return cmsRole;
+	}
+	
+	private void initCmsRoleMenu(CmsRoleMenuRepository cmsRoleMenuRepository, CmsMenu cmsMenu, CmsRole cmsRole) {
+		CmsRoleMenu cmsRoleMenu = new CmsRoleMenu();
+		cmsRoleMenu.setCmsMenu(cmsMenu);
+		cmsRoleMenu.setCmsRole(cmsRole);
+		cmsRoleMenu.setNeedApproval(false);
+		
+		cmsRoleMenuRepository.save(cmsRoleMenu);
+		
+		logger.info("Init Cms Role Menu Success");
+	}
+	
+	private void initCmsUser(CmsUserRepository cmsUserRepository, Merchant merchant, CmsRole cmsRole) {
 		CmsUser cmsUser = new CmsUser();
 		cmsUser.setActive(true);
 		cmsUser.setName("SuperAdmin");
@@ -154,6 +218,7 @@ public class SejutaKebaikanCmsApplication {
 		cmsUser.setEmail("su_admin@test.com");
 		cmsUser.setPassword(PasswordUtil.hashPassword("suadmin"));
 		cmsUser.setMerchant(merchant);
+		cmsUser.setCmsRole(cmsRole);
 		
 		cmsUserRepository.save(cmsUser);
 

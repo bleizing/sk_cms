@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.sun.istack.NotNull;
 
 @Entity
