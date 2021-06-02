@@ -1,4 +1,4 @@
-package com.infosys.sejutakebaikancms;
+package com.infosys.sejuta_kebaikan_cms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

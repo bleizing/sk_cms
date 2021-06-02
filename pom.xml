@@ -9,10 +9,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.infosys</groupId>
-	<artifactId>sejuta-kebaikan-cms</artifactId>
+	<artifactId>sejuta_kebaikan_cms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sejuta Kebaikan CMS</name>
 	<description>CMS untuk project Sejuta Kebaikan - Infosys</description>
+	
+	<packaging>war</packaging>
+	
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -55,6 +58,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		
+    	<finalName>${artifactId}</finalName>
 	</build>
 
 </project>
