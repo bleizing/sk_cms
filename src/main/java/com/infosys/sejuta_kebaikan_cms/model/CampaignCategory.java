@@ -9,6 +9,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "campaign_categories")
 public class CampaignCategory extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column(length = 3, unique = true)
 	private String code;

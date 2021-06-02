@@ -9,6 +9,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "merchants")
 public class Merchant extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column(unique = true)
 	private String name;

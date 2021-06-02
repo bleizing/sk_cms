@@ -5,15 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.CascadeType;
 
 import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "cms_users")
 public class CmsUser extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private String name;

@@ -15,6 +15,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "donation_verifications")
 public class DonationVerification extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private boolean anonymous;

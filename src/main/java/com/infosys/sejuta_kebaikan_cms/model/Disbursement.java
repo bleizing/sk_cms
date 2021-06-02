@@ -9,6 +9,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "disbursements")
 public class Disbursement extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private String invoiceNumber;

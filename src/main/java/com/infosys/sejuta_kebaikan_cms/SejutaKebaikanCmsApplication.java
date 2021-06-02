@@ -1,7 +1,13 @@
 package com.infosys.sejuta_kebaikan_cms;
 
-import org.springframework.boot.ApplicationRunner;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,13 +19,6 @@ import com.infosys.sejuta_kebaikan_cms.model.User;
 import com.infosys.sejuta_kebaikan_cms.repository.CampaignCategoryRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.CampaignRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.UserRepository;
-
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SpringBootApplication
 @EnableJpaAuditing

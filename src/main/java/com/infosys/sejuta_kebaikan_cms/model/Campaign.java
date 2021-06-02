@@ -15,6 +15,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "campaigns")
 public class Campaign extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private String title;

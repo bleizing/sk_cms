@@ -15,6 +15,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "donation_donates")
 public class DonationDonate extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")

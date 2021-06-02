@@ -2,9 +2,6 @@ package com.infosys.sejuta_kebaikan_cms.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -12,6 +9,11 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "users")
 public class User extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private String name;

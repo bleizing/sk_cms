@@ -15,6 +15,11 @@ import javax.persistence.ManyToOne;
 @Entity
 @Table(name = "bills")
 public class Bill extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@NotNull
 	@Column
 	private boolean anonymous;
