@@ -15,7 +15,7 @@ import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 
 @Controller
-@RequestMapping({"/pages/"})
+@RequestMapping({"/pages"})
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(SejutaKebaikanCmsApplication.class);
 	
@@ -32,6 +32,14 @@ public class HomeController {
         modelAndView.addObject("name", "Welcome " + cmsUser.getName() + "/" + "(" + cmsUser.getEmail() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("/pages/home");
+        return modelAndView;
+    }
+	
+	@GetMapping("/login")
+	public ModelAndView login(){
+		logger.info("login page");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/login");
         return modelAndView;
     }
 }
