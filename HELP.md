@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.infosys.sejuta-kebaikan-cms' is invalid and this project uses 'com.infosys.sejutakebaikancms' instead.
+* The original package name 'com.infosys.sejuta-kebaikan-cms' is invalid and this project uses 'com.infosys.sejuta_kebaikan_cms' instead.
 
 # Getting Started
 
