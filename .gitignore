@@ -47,6 +47,7 @@ release.properties
 dependency-reduced-pom.xml
 
 !.gitignore
+logs/
 
 *#
 *.iml
