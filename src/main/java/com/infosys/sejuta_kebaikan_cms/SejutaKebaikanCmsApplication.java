@@ -201,6 +201,7 @@ public class SejutaKebaikanCmsApplication {
 	
 	private void initCmsRoleMenu(CmsRoleMenuRepository cmsRoleMenuRepository, CmsMenu cmsMenu, CmsRole cmsRole) {
 		CmsRoleMenu cmsRoleMenu = new CmsRoleMenu();
+		cmsRoleMenu.setActive(true);
 		cmsRoleMenu.setCmsMenu(cmsMenu);
 		cmsRoleMenu.setCmsRole(cmsRole);
 		cmsRoleMenu.setNeedApproval(false);
