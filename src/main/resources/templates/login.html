@@ -1,34 +1,96 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	th:style="'opacity: 1; background-size: cover; height: auto; min-height: 100%; background-image: url(/assets/admin/img/background2.png);'">
 <head>
-    <title>Spring Security Tutorial</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<style type="text/css">
+    @font-face {
+		font-family: 'Glyphicons Halflings';
+		src: url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot);
+		src: url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?#iefix)
+			format('embedded-opentype'),
+			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2) format('woff2'),
+			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff) format('woff'),
+			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf) format('truetype'),
+			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular)
+			format('svg')
+	}
+	
+	  @font-face {
+		font-family: 'FontAwesome';
+		src: url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
+		src: url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0')
+			format('embedded-opentype'),
+			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular')
+			format('svg');
+		font-weight: normal;
+		font-style: normal
+	}
+ 
+  </style>
+	
+	<title>Login CMS</title>
+	
+	<!-- TODO : Ganti Logo -->
+	<link th:href="@{/assets/admin/img/logo.png}" type='image/x-icon' rel='shortcut icon'>
+	
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" th:href="@{/assets/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" th:href="@{/assets/bower_components/font-awesome/css/font-awesome.min.css}">
+	<!-- Ionicons -->
+	<link rel="stylesheet" th:href="@{/assets/bower_components/Ionicons/css/ionicons.min.css}">
+	<!-- Theme style -->
+	<link rel="stylesheet" th:href="@{/assets/admin/css/AdminLTE.css}">
+	<!-- iCheck -->
+	<link rel="stylesheet" th:href="@{/assets/admin/css/skins/skin-blue.min.css}">
 </head>
 
-<body>
+<body class="hold-transition login-page" style="background: none">
+	<div class="login-box">
+		<!-- /.login-logo -->
+		<div class="login-box-body" style="background-color: rgba(242, 241, 241, 0.9); border-radius: 5px">
+			<div class="login-logo">
+				<b>Sejuta Kebaikan</b>
+			</div>
 
-<div class="container">
-    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
-    <form th:action="@{/login}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading" th:text="Welcome"></h3>
-        <br/>
+			<form th:action="@{/login}" method="POST">
+				<div class="form-group has-feedback">
+					<input id="email" name="email" type="text" class="form-control" placeholder="Email">
+					<span class="glyphicon glyphicon-user form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input id="password" name="password" type="password" class="form-control" placeholder="Password">
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div align="center" th:if="${param.error}">
+		            <p style="font-size: 20; color: #FF1C19;">Email atau Password Salah</p>
+		        </div>
+				<div class="row">
+					<div class="col-xs-8"></div>
+					<div class="col-xs-4">
+						<button class="btn btn-primary btn-block btn-flat" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
-        <input type="text" id="email" name="email" placeholder="Email"
-               class="form-control"/> <br/>
-        <input type="password" th:placeholder="Password"
-               id="password" name="password" class="form-control"/> <br/>
+	<script th:src="@{/assets/bower_components/jquery/jquery.min.js}"></script>
+	<script th:src="@{/assets/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/assets/bower_components/iCheck/icheck.js}"></script>
+	<script th:src="@{/assets/admin/js/adminlte.min.js}"></script>
 
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-                th:text="Login"></button>
-    </form>
-</div>
+	<!-- iCheck -->
+	<script th:src="@{/assets/bower_components/iCheck/icheck.min.js}"></script>
+	<script th:src="@{/assets/bower_components/bootstrap/dist/js/bootbox.min.js}"></script>
+
 </body>
 </html>

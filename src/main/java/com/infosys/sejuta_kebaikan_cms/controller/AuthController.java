@@ -1,6 +1,9 @@
 package com.infosys.sejuta_kebaikan_cms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,14 @@ public class AuthController {
 	@GetMapping
 	public ModelAndView loginPage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            modelAndView.setViewName("login");
+        } else {
+        	modelAndView.setViewName("redirect:/pages");
+        }
+ 
         return modelAndView;
     }
 	
