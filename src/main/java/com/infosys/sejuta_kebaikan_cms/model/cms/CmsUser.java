@@ -1,5 +1,7 @@
 package com.infosys.sejuta_kebaikan_cms.model.cms;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +20,10 @@ public class CmsUser extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@NotNull
+	@Column(unique = true)
+	private String username;
 
 	@NotNull
 	@Column
@@ -35,6 +41,15 @@ public class CmsUser extends BaseModel {
 	@Column
 	private String password;
 	
+	@Column
+	private Date lastLoginAt;
+	
+	@Column
+	private Date failedLoginAt;
+	
+	@Column
+	private Integer failedLoginAttempt;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
@@ -42,6 +57,14 @@ public class CmsUser extends BaseModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cms_role_id")
 	private CmsRole cmsRole;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getName() {
 		return name;
@@ -75,6 +98,30 @@ public class CmsUser extends BaseModel {
 		this.password = password;
 	}
 
+	public Date getLastLoginAt() {
+		return lastLoginAt;
+	}
+
+	public void setLastLoginAt(Date lastLoginAt) {
+		this.lastLoginAt = lastLoginAt;
+	}
+
+	public Date getFailedLoginAt() {
+		return failedLoginAt;
+	}
+
+	public void setFailedLoginAt(Date failedLoginAt) {
+		this.failedLoginAt = failedLoginAt;
+	}
+
+	public Integer getFailedLoginAttempt() {
+		return failedLoginAttempt;
+	}
+
+	public void setFailedLoginAttempt(Integer failedLoginAttempt) {
+		this.failedLoginAttempt = failedLoginAttempt;
+	}
+
 	public Merchant getMerchant() {
 		return merchant;
 	}
@@ -90,5 +137,5 @@ public class CmsUser extends BaseModel {
 	public void setCmsRole(CmsRole cmsRole) {
 		this.cmsRole = cmsRole;
 	}
-	
+
 }
