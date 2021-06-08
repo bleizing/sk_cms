@@ -1,42 +1,4 @@
-/**
- * 
- */
-
 var Infosys={};
-Infosys['key']='0000000000000000';
-
-Infosys['SCRIPTS']=[
-                    
-    /* FORGES */
-    '/scripts/forge/forge.js',
-    '/scripts/forge/crypto.js',
-    '/scripts/forge/tls.js',
-    '/scripts/forge/cipher.js',
-    '/scripts/forge/cipherModes.js',
-    '/scripts/forge/aes.js',
-    '/scripts/forge/aesCipherSuites.js',
-    '/scripts/forge/util.js',
-    
-    /* JSON */
-    '/scripts/json/json.js'
-    
-];
-
-$(document).ready(function(){
-	var _body=$(document.body);
-	for(var i=0;i<Infosys.SCRIPTS.length;i++){
-		var _src=Infosys.SCRIPTS[i];
-		_body.append(
-			$('<script>')
-				.attr('type','text/javascript')
-				.attr('src',_ctx+_src)
-		);
-	}
-});
-
-function test() {
-	alert('do test');
-}
 
 Infosys['log']=function(obj){
 	try {
@@ -84,50 +46,4 @@ Infosys['showProgress']=function(){
 Infosys['hideProgress']=function(prg){
 	var _body=document.body;
 	_body.removeChild(prg);
-};
-
-Infosys['publicApiJson']=function(url, json, timeout, onsuccess, onfail) {
-	var _prg=Infosys.showProgress();
-	var _param={
-	    type:'POST',
-	    url:url,
-	    contentType:'text/plain',
-	    dataType:'text',
-	    timeout:timeout
-	};
-	
-	if(json){
-		_param['data']=JSON.stringify(json);
-	}
-	
-	$.ajax(_param)
-		.done(function(data,status,xhr) {			
-			try {
-				var _isEncrypted=xhr.getResponseHeader('IST-Using-Encryption');
-				var _clear='{}';
-				if('true'==_isEncrypted){
-					var _defaultKey=xhr.getResponseHeader('IST-Default-Key');
-					if(_defaultKey){
-						_clear=Crypto.decrypt(data,_defaultKey);
-					}else{
-						_clear=Crypto.decrypt(data,Infosys.key);
-					}
-				}
-
-				var _ret=JSON.parse(_clear);
-				onsuccess(_ret);
-			}catch(e){
-				try{
-					onfail(''+e);
-				}catch(ex){}
-			}
-		})
-		.fail(function(err) {
-			try{
-				onfail(''+err);
-			}catch(e){}
-		})
-		.always(function() {
-			Infosys.hideProgress(_prg);
-		});
 };
