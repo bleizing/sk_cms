@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 
 @Controller
@@ -24,6 +25,7 @@ public class AuthController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             modelAndView.setViewName("login");
+            ConstModel.setUserCmsMenuMap(null);
         } else {
         	modelAndView.setViewName("redirect:/pages/dashboard");
         }

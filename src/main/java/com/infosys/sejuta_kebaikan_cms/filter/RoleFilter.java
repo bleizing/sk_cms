@@ -1,6 +1,7 @@
 package com.infosys.sejuta_kebaikan_cms.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.FilterChain;
@@ -39,7 +40,7 @@ public class RoleFilter extends HttpFilter {
 			logger.info("path = " + path);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			CmsUser cmsUser = cmsUserService.findCmsUserByEmail(auth.getName());
-			HashMap<Long, String> cmsRoleMenuMap = cmsRoleMenuService.getAllData();
+			HashMap<Long, ArrayList<String>> cmsRoleMenuMap = cmsRoleMenuService.getAllData();
 			boolean isValid = cmsRoleMenuService.isRoleMenuValid(cmsUser.getCmsRole().getId(), path);
 			
 			if (!isValid && !path.contains("/dashboard")) {

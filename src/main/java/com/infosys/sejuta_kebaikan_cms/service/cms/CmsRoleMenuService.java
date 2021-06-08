@@ -17,7 +17,8 @@ public class CmsRoleMenuService {
 	@Autowired
 	private CmsRoleMenuRepository cmsRoleMenuRepository;
 	
-	private HashMap<Long, String> cmsRoleMenuMap;
+	private ArrayList<String> menuArrayList = new ArrayList<>();
+	private HashMap<Long, ArrayList<String>> cmsRoleMenuMap;
 	
 	public void setInitData() {
 		List<CmsRoleMenu> cmsRoleMenuList = null;
@@ -28,13 +29,20 @@ public class CmsRoleMenuService {
 		
 		if (cmsRoleMenuMap.size() == 0) {
 			cmsRoleMenuList = cmsRoleMenuRepository.findByActive(true);
+			Long cmsRoleId = null;
+			menuArrayList.clear();
 			for (CmsRoleMenu cmsRoleMenu : cmsRoleMenuList) {
-				cmsRoleMenuMap.put(cmsRoleMenu.getCmsRole().getId(), cmsRoleMenu.getCmsMenu().getUrl());
+				cmsRoleId = cmsRoleMenu.getCmsRole().getId();
+				menuArrayList.add(cmsRoleMenu.getCmsMenu().getUrl());
+			}
+			
+			if (cmsRoleId != null) {
+				cmsRoleMenuMap.put(cmsRoleId, menuArrayList);
 			}
 		}
 	}
 	
-	public HashMap<Long, String> getAllData() {
+	public HashMap<Long, ArrayList<String>> getAllData() {
 		setInitData();
 		
 		return cmsRoleMenuMap;
@@ -44,10 +52,12 @@ public class CmsRoleMenuService {
 		boolean valid = false;
 		setInitData();
 		
-		for (Map.Entry<Long, String> entry : cmsRoleMenuMap.entrySet()) {
-			if (roleId.equals(entry.getKey()) && path.equals(entry.getValue())) {
-				valid = true;
-				break;
+		for (Map.Entry<Long, ArrayList<String>> entry : cmsRoleMenuMap.entrySet()) {
+			for (String urlMenu : entry.getValue()) {
+				if (roleId.equals(entry.getKey()) && path.equals(urlMenu)) {
+					valid = true;
+					break;
+				}
 			}
 		}
 		
