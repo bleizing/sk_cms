@@ -29,9 +29,10 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CmsUser cmsUser = cmsUserService.findCmsUserByEmail(auth.getName());
 		logger.info("cms user name = " + cmsUser.getName());
-        modelAndView.addObject("name", "Welcome " + cmsUser.getName() + "/" + "(" + cmsUser.getEmail() + ")");
+        modelAndView.addObject("cmsUser", cmsUser);
+        modelAndView.addObject("title", "Beranda");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("/pages/home");
+        modelAndView.setViewName("pages/home");
         return modelAndView;
     }
 	
