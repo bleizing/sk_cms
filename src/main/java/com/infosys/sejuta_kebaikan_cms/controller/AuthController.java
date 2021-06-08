@@ -25,7 +25,7 @@ public class AuthController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             modelAndView.setViewName("login");
         } else {
-        	modelAndView.setViewName("redirect:/pages");
+        	modelAndView.setViewName("redirect:/pages/dashboard");
         }
  
         return modelAndView;

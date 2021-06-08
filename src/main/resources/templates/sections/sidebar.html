@@ -7,299 +7,33 @@
 		<section class="sidebar">
 			<ul class="sidebar-menu" data-widget="tree">
 				<li>
-					<a th:href="@{/pages}">
+					<a th:href="@{/pages/dashboard}">
 						<i class="fa fa-home"></i>
 						<span>Beranda</span>
 					</a>
 				</li>
-
-
-				<li id="menuManageParam" class="treeview menu-display">
-					<a>
-						<i class="fa fa-sliders"></i>
-						<span>Management Parameter</span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageParam" class="treeview-menu menu-display">
-						<li id="li-10000" class="li-10000 menu-display">
-							<a href="${ctx }/pages/denom/pulsa">
-								<i class="fa fa-phone-square"></i>
-								Denom Pulsa
-							</a>
-						</li>
-						<li id="li-37000" class="li-37000 menu-display">
-							<a href="${ctx }/pages/denom/paketdata">
-								<i class="fa fa-phone-square"></i>
-								Paket Data
-							</a>
-						</li>
-						<li id="li-38000" class="li-38000 menu-display">
-							<a href="${ctx }/pages/denom/brizzi">
-								<i class="fa fa-credit-card"></i>
-								Denom Brizzi
-							</a>
-						</li>
-						<li id="li-39000" class="li-39000 menu-display">
-							<a href="${ctx }/pages/ccmanagement">
-								<i class="fa fa-credit-card"></i>
-								Manajemen Kartu Kredit
-							</a>
-						</li>
-						<li id="li-13000" class="li-13000 menu-display">
-							<a href="${ctx }/pages/cardmanagement/list">
-								<i class="fa fa-credit-card"></i>
-								Manajemen Kartu
-							</a>
-						</li>
-						<li id="li-20000" class="li-20000 menu-display">
-							<a href="${ctx }/pages/bank/list">
-								<i class="fa fa-bank"></i>
-								Master Bank
-							</a>
-						</li>
-						<li id="li-30000" class="li-30000 menu-display">
-							<a href="${ctx }/pages/sysconfig">
-								<i class="fa fa-gears"></i>
-								System Config
-							</a>
-						</li>
-						<li id="li-17000" class="li-17000 menu-display">
-							<a href="${ctx }/pages/scheduler/list">
-								<i class="fa fa-calendar"></i>
-								Scheduler Manager
-							</a>
-						</li>
-						<li id="li-22000" class="li-22000 menu-display">
-							<a href="${ctx }/pages/singleton/list">
-								<i class="fa fa-recycle"></i>
-								Singleton Manager
-							</a>
-						</li>
-						<li id="li-40000" class="li-40000 menu-display">
-							<a href="${ctx }/pages/tnc/list">
-								<i class="fa fa-file-text-o"></i>
-								Syarat Ketentuan
-							</a>
-						</li>
-						<li id="li-14000" class="li-14000 menu-display">
-							<a href="${ctx }/pages/instructions/list">
-								<i class="fa fa-file-text-o"></i>
-								Petunjuk Penggunaan
-							</a>
-						</li>
-
-					</ul>
-				</li>
-
-				<li id="menuManageKYC" class="treeview menu-display">
-					<a>
-						<i class="fa fa-sliders"></i>
-						<span>Management KYC</span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageKYC" class="treeview-menu menu-display">
-						<li id="li-50000" class="li-50000 menu-display">
-							<a href="${ctx }/pages/kyc/list">
-								<i class="fa fa-file-text-o"></i>
-								Verifikasi KYC
-							</a>
-						</li>
-						<li id="li-60000" class="li-60000 menu-display">
-							<a href="${ctx }/pages/kyc/list/approve">
-								<i class="fa fa-file-text-o"></i>
-								Approval KYC
-							</a>
-						</li>
-						<li id="li-23000" class="li-23000 menu-display">
-							<a href="${ctx }/pages/kyc/status/list">
-								<i class="fa fa-folder-open-o"></i>
-								Dashboard Open Account
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li id="menuManageOpenAccount" class="treeview menu-display">
-					<a>
-						<i class="fa fa-sliders"></i>
-						<span>Management Open Account</span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-
-					<ul id="treeMenuManageOpenAccount"
-						class="treeview-menu menu-display">
-						<li id="li-55000" class="li-55000 menu-display">
-							<a href="${ctx }/pages/openaccount/list/new">
-								<i class="fa fa-file-text-o"></i>
-								New
-							</a>
-						</li>
-						<li id="li-55100" class="li-55100 menu-display">
-							<a href="${ctx }/pages/openaccount/list/existing">
-								<i class="fa fa-file-text-o"></i>
-								Existing
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li id="menuManageVoucher" class="treeview menu-display">
-					<a href="${ctx }/pages/ewallet/dashboard">
-						<i class="fa fa-sliders"></i>
-						<span>Management Voucher eWallet</span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageVoucher" class="treeview-menu menu-display">
-						<li id="li-79999" class="li-79999 menu-display">
-							<a href="${ctx }/pages/ewallet/dashboard">
-								<i class="fa fa-bar-chart-o"></i>
-								Dashboard
-							</a>
-						</li>
-						<li id="li-70000" class="li-70000 menu-display">
-							<a href="${ctx }/pages/ewallet/maker">
-								<i class="fa fa-money"></i>
-								Maker PO
-							</a>
-						</li>
-						<li id="li-80000" class="li-80000 menu-display">
-							<a href="${ctx }/pages/ewallet/spv">
-								<i class="fa fa-money"></i>
-								Approval PO
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li id="menuManagePromo" class="treeview menu-display">
-					<a href="#">
-						<i class="fa fa-sliders"></i>
-						<span> Management Promo </span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManagePromo" class="treeview-menu">
-						<li id="li-15000" class="li-15000 menu-display">
-							<a href="${ctx}/pages/promo/list">
-								<i class="fa fa-dollar"></i>
-								Kode Promo
-							</a>
-						</li>
-						<li id="li-16000" class="li-16000 menu-display">
-							<a href="${ctx}/pages/rules/list">
-								<i class="fa fa-book"></i>
-								Rules Authority
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li id="menuManageResponseCode" class="treeview menu-display">
-					<a href="#">
-						<i class="fa fa-sliders"></i>
-						<span> Management Response Code </span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageResponseCode" class="treeview-menu">
-						<li id="li-18000" class="li-18000 menu-display">
-							<a href="${ctx}/pages/resp-code/list">
-								<i class="fa fa-list-alt"></i>
-								List Code
-							</a>
-						</li>
-						<li id="li-19000" class="li-19000 menu-display">
-							<a href="${ctx}/pages/resp-code-map/list">
-								<i class="fa fa-clipboard"></i>
-								Code Mapping
-							</a>
-						</li>
-						<li id="li-21000" class="li-21000 menu-display">
-							<a href="${ctx}/pages/resp-handler-map/list">
-								<i class="fa fa-clipboard"></i>
-								Handler Map
-							</a>
-						</li>
-						<li id="li-24000" class="li-24000 menu-display">
-							<a href="${ctx}/pages/handler-code/list">
-								<i class="fa fa-clipboard"></i>
-								Handler Code
-							</a>
-						</li>
-					</ul>
-
-				</li>
-
-
-
-
-				<li id="menuManageImage" class="treeview menu-display">
-					<a>
-						<i class="fa fa-sliders"></i>
-						<span>Management Image</span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageImage" class="treeview-menu menu-display">
-						<li id="li-88100" class="li-88100 menu-display">
-							<a href="${ctx }/pages/imagemanagement/list">
-								<i class="fa fa-file-text-o"></i>
-								Maker Image
-							</a>
-						</li>
-						<li id="li-88200" class="li-88200 menu-display">
-							<a href="${ctx }/pages/imagemanagement/list/approval">
-								<i class="fa fa-file-text-o"></i>
-								Signer Image
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li id="menuManageUser" class="treeview menu-display">
-					<a href="#">
-						<i class="fa fa-users"></i>
-						<span> Management User </span>
-						<span class="pull-right-container">
-							<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-					<ul id="treeMenuManageUser" class="treeview-menu menu-display">
-						<li id="li-90000" class="li-90000 menu-display">
-							<a href="${ctx}/pages/usermanagement/usermobile">
-								<i class="fa fa-user"></i>
-								User New BRI Mobile
-							</a>
-						</li>
-						<li id="li-11000" class="li-11000 menu-display">
-							<a href="${ctx}/pages/usermanagement/userportal">
-								<i class="fa fa-tv"></i>
-								User Portal
-							</a>
-						</li>
-						<li id="li-12000" class="li-12000 menu-display">
-							<a href="${ctx}/pages/usermanagement/grouprole">
-								<i class="fa fa-tags"></i>
-								Group role
-							</a>
-						</li>
-					</ul>
-				</li>
-
-
-			</ul>
-
+				
+				<th:block th:each="group : ${userCmsMenu}" th:remove="tag" th:with="pathGroup=${#strings.toLowerCase({#strings.replace(group.key,' ','-')})}">
+					<li class="treeview menu-display" th:classappend="${#httpServletRequest.requestURI.contains({pathGroup})} ? 'active' : ''">
+						<a>
+							<i class="fa fa-sliders"></i>
+							<span th:text="${group.key}"></span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu menu-display">
+							<th:block th:each="menu : ${group.value}" th:remove="tag">
+								<li class="menu-display" th:classappend="${#httpServletRequest.requestURI.contains({menu.url})} ? 'active' : ''">
+									<a th:href="@{|${menu.url}|}">
+										<i class="fa fa-phone-square"></i>
+										<th:block th:text="${menu.name}" th:remove="tag"></th:block>
+									</a>
+								</li>
+							</th:block>
+						</ul>
+					</li>
+				</th:block>
 		</section>
 	</aside>
 </body>

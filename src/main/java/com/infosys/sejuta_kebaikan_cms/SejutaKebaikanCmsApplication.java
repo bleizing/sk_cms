@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.Campaign;
 import com.infosys.sejuta_kebaikan_cms.model.CampaignCategory;
 import com.infosys.sejuta_kebaikan_cms.model.Merchant;
@@ -37,6 +38,8 @@ import com.infosys.sejuta_kebaikan_cms.util.PasswordUtil;
 @EnableJpaAuditing
 public class SejutaKebaikanCmsApplication {
 	private static final Logger logger = LoggerFactory.getLogger(SejutaKebaikanCmsApplication.class);
+	
+	private CmsUser cmsUser;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SejutaKebaikanCmsApplication.class, args);
@@ -49,7 +52,7 @@ public class SejutaKebaikanCmsApplication {
     } 
 	
 	private void initData(CampaignCategoryRepository campaignCategoryRepository, UserRepository userRepository, CampaignRepository campaignRepository, MerchantRepository merchantRepository, CmsUserRepository cmsUserRepository, CmsGroupMenuRepository cmsGroupMenuRepository, CmsMenuRepository cmsMenuRepository, CmsRoleRepository cmsRoleRepository, CmsRoleMenuRepository cmsRoleMenuRepository) {
-		if (!isDataLoaded(userRepository)) {
+		if (!isDataLoaded(userRepository, cmsUserRepository)) {
 			logger.info("Init Data");
 			CampaignCategory campaignCategory = initCampaignCategory(campaignCategoryRepository);
 			User user = initUser(userRepository);
@@ -62,13 +65,14 @@ public class SejutaKebaikanCmsApplication {
 			initCmsUser(cmsUserRepository, merchant, cmsRole);
 		}
 		logger.info("Data Available");
+		checkMenu(cmsGroupMenuRepository);
 	}
 	
-	private boolean isDataLoaded(UserRepository userRepository) {
-		boolean isDataLoaded = false;
+	private boolean isDataLoaded(UserRepository userRepository, CmsUserRepository cmsUserRepository) {
+		boolean isDataLoaded = userRepository.findById(1L).isPresent();
 		
-		if (userRepository.findById(1L).isPresent()) {
-			isDataLoaded = true;
+		if (isDataLoaded) {
+			cmsUser = cmsUserRepository.findById(1L).get();
 		}
 		
 		return isDataLoaded;
@@ -224,5 +228,11 @@ public class SejutaKebaikanCmsApplication {
 		cmsUserRepository.save(cmsUser);
 
 		logger.info("Init CMS User Success");
+		
+		this.cmsUser = cmsUser;
+	}
+	
+	private void checkMenu(CmsGroupMenuRepository cmsGroupMenuRepository) {
+		ConstModel.getUserCmsMenuMap();
 	}
 }

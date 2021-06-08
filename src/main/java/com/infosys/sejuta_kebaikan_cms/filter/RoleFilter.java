@@ -9,6 +9,8 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +22,8 @@ import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 
 @Component
 public class RoleFilter extends HttpFilter {
+	private static final Logger logger = LoggerFactory.getLogger(RoleFilter.class);
+	
 	@Autowired
 	private CmsRoleMenuService cmsRoleMenuService;
 	
@@ -31,16 +35,18 @@ public class RoleFilter extends HttpFilter {
         throws IOException, ServletException {
 		String path = request.getRequestURI();
 		if (path.startsWith("/pages/")) {
+			logger.info("RoleFilter");
+			logger.info("path = " + path);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			CmsUser cmsUser = cmsUserService.findCmsUserByEmail(auth.getName());
 			HashMap<Long, String> cmsRoleMenuMap = cmsRoleMenuService.getAllData();
 			boolean isValid = cmsRoleMenuService.isRoleMenuValid(cmsUser.getCmsRole().getId(), path);
 			
-			if (!isValid) {
-				((HttpServletResponse) response).sendRedirect("/pages");
+			if (!isValid && !path.contains("/dashboard")) {
+				logger.info("Not Valid");
+				((HttpServletResponse) response).sendRedirect("/pages/dashboard");
 				return;
 			}
-			
 		}
 
         chain.doFilter(request, response);
