@@ -39,7 +39,8 @@ public class CmsMenu extends BaseModel {
 	@JoinColumn(name = "cms_group_menu_id")
 	private CmsGroupMenu cmsGroupMenu;
 	
-	@OneToMany(mappedBy = "cmsMenu", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany(mappedBy = "cmsMenu", fetch = FetchType.LAZY, 
+			cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	private List<CmsRoleMenu> cmsRoleMenus = new ArrayList<CmsRoleMenu>();
 
 	public String getName() {

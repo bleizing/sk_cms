@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="sections/head :: head(${title})">
+	Head
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<header th:replace="sections/header :: header">
+			Header
+		</header>
+		<aside class="main-sidebar" th:replace="sections/sidebar :: sidebar">
+			Sidebar
+		</aside>
+
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1 th:text="${title}">
+					Title
+				</h1>
+			</section>
+
+			<section class="content container-fluid" layout:fragment="content">
+				Content
+			</section>
+		</div>
+
+		<footer class="main-footer" th:replace="sections/footer :: footer">
+			Footer
+		</footer>
+	</div>
+
+	<script th:src="@{/assets/admin/js/adminlte.min.js}"></script>
+</body>
+</html>

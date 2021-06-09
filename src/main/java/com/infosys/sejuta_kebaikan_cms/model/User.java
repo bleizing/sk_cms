@@ -1,5 +1,7 @@
 package com.infosys.sejuta_kebaikan_cms.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,6 +15,10 @@ public class User extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@NotNull
+	@Column(unique = true)
+	private String username;
 
 	@NotNull
 	@Column
@@ -38,6 +44,23 @@ public class User extends BaseModel {
 	
 	@Column
 	private String deviceId;
+	
+	@Column
+	private Date lastLoginAt;
+	
+	@Column
+	private Date failedLoginAt;
+	
+	@Column
+	private Integer failedLoginAttempt;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getName() {
 		return name;
@@ -94,5 +117,28 @@ public class User extends BaseModel {
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
-	
+
+	public Date getLastLoginAt() {
+		return lastLoginAt;
+	}
+
+	public void setLastLoginAt(Date lastLoginAt) {
+		this.lastLoginAt = lastLoginAt;
+	}
+
+	public Date getFailedLoginAt() {
+		return failedLoginAt;
+	}
+
+	public void setFailedLoginAt(Date failedLoginAt) {
+		this.failedLoginAt = failedLoginAt;
+	}
+
+	public Integer getFailedLoginAttempt() {
+		return failedLoginAttempt;
+	}
+
+	public void setFailedLoginAttempt(Integer failedLoginAttempt) {
+		this.failedLoginAttempt = failedLoginAttempt;
+	}
 }

@@ -11,6 +11,11 @@ import com.infosys.sejuta_kebaikan_cms.model.BaseModel;
 @Entity
 @Table(name = "cms_role_menus")
 public class CmsRoleMenu extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@JoinColumn(name = "cms_role_id", referencedColumnName = "id")
 	@ManyToOne
 	private CmsRole cmsRole;

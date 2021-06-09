@@ -2,55 +2,7 @@
 <html
 	xmlns:th="http://www.thymeleaf.org"
 	th:style="'opacity: 1; background-size: cover; height: auto; min-height: 100%; background-image: url(/assets/admin/img/background2.png);'">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	
-	<style type="text/css">
-    @font-face {
-		font-family: 'Glyphicons Halflings';
-		src: url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot);
-		src: url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?#iefix)
-			format('embedded-opentype'),
-			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2) format('woff2'),
-			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff) format('woff'),
-			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf) format('truetype'),
-			url(/assets/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular)
-			format('svg')
-	}
-	
-	  @font-face {
-		font-family: 'FontAwesome';
-		src: url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
-		src: url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0')
-			format('embedded-opentype'),
-			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
-			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
-			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
-			url('/assets/bower_components/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular')
-			format('svg');
-		font-weight: normal;
-		font-style: normal
-	}
- 
-  </style>
-	
-	<title>Login CMS</title>
-	
-	<!-- TODO : Ganti Logo -->
-	<link th:href="@{/assets/admin/img/logo.png}" type='image/x-icon' rel='shortcut icon'>
-	
-	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" th:href="@{/assets/bower_components/bootstrap/dist/css/bootstrap.min.css}">
-	<!-- Font Awesome -->
-	<link rel="stylesheet" th:href="@{/assets/bower_components/font-awesome/css/font-awesome.min.css}">
-	<!-- Ionicons -->
-	<link rel="stylesheet" th:href="@{/assets/bower_components/Ionicons/css/ionicons.min.css}">
-	<!-- Theme style -->
-	<link rel="stylesheet" th:href="@{/assets/admin/css/AdminLTE.css}">
-	<!-- iCheck -->
-	<link rel="stylesheet" th:href="@{/assets/admin/css/skins/skin-blue.min.css}">
+<head th:replace="sections/head :: head('Login')">
 </head>
 
 <body class="hold-transition login-page" style="background: none">
@@ -63,7 +15,7 @@
 
 			<form th:action="@{/login}" method="POST">
 				<div class="form-group has-feedback">
-					<input id="email" name="email" type="text" class="form-control" placeholder="Email">
+					<input id="username" name="username" type="text" class="form-control" placeholder="Username">
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
@@ -71,7 +23,7 @@
 					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
 				<div align="center" th:if="${param.error}">
-		            <p style="font-size: 20; color: #FF1C19;">Email atau Password Salah</p>
+		            <p style="font-size: 20; color: #FF1C19;">Username atau Password Salah</p>
 		        </div>
 				<div class="row">
 					<div class="col-xs-8"></div>
@@ -82,15 +34,5 @@
 			</form>
 		</div>
 	</div>
-
-	<script th:src="@{/assets/bower_components/jquery/jquery.min.js}"></script>
-	<script th:src="@{/assets/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
-	<script th:src="@{/assets/bower_components/iCheck/icheck.js}"></script>
-	<script th:src="@{/assets/admin/js/adminlte.min.js}"></script>
-
-	<!-- iCheck -->
-	<script th:src="@{/assets/bower_components/iCheck/icheck.min.js}"></script>
-	<script th:src="@{/assets/bower_components/bootstrap/dist/js/bootbox.min.js}"></script>
-
 </body>
 </html>

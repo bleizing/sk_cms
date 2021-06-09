@@ -37,7 +37,7 @@ import com.infosys.sejuta_kebaikan_cms.util.PasswordUtil;
 @EnableJpaAuditing
 public class SejutaKebaikanCmsApplication {
 	private static final Logger logger = LoggerFactory.getLogger(SejutaKebaikanCmsApplication.class);
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SejutaKebaikanCmsApplication.class, args);
 	}
@@ -65,13 +65,7 @@ public class SejutaKebaikanCmsApplication {
 	}
 	
 	private boolean isDataLoaded(UserRepository userRepository) {
-		boolean isDataLoaded = false;
-		
-		if (userRepository.findById(1L).isPresent()) {
-			isDataLoaded = true;
-		}
-		
-		return isDataLoaded;
+		return userRepository.findById(1L).isPresent();
 	}
 	
 	private CampaignCategory initCampaignCategory(CampaignCategoryRepository campaignCategoryRepository) {
@@ -92,6 +86,7 @@ public class SejutaKebaikanCmsApplication {
 		User user = new User();
 		user.setActive(true);
 		user.setName("Admin");
+		user.setUsername("admin");
 		user.setPhoneNumber("081234567890");
 		user.setEmail("admin@test.com");
 		user.setPassword(PasswordUtil.hashPassword("admin"));
@@ -215,6 +210,7 @@ public class SejutaKebaikanCmsApplication {
 		CmsUser cmsUser = new CmsUser();
 		cmsUser.setActive(true);
 		cmsUser.setName("SuperAdmin");
+		cmsUser.setUsername("su");
 		cmsUser.setPhoneNumber("081234567891");
 		cmsUser.setEmail("su_admin@test.com");
 		cmsUser.setPassword(PasswordUtil.hashPassword("suadmin"));
