@@ -14,7 +14,7 @@
 				</li>
 				
 				<th:block th:each="group : ${userCmsMenu}" th:remove="tag" th:with="pathGroup=${#strings.toLowerCase({#strings.replace(group.key,' ','-')})}">
-					<li class="treeview menu-display" th:classappend="${pathGroup.contains({activeGroupMenu})} ? 'active' : ${pathGroup}">
+					<li class="treeview menu-display" th:classappend="${pathGroup.contains({activeGroupMenu})} ? 'active' : ''">
 						<a>
 							<i class="fa fa-sliders"></i>
 							<span th:text="${group.key}"></span>
