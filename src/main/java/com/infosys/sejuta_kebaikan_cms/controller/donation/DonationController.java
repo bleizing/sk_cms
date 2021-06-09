@@ -17,14 +17,14 @@ public class DonationController {
 	@GetMapping("/list")
 	public ModelAndView list(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "List Donasi", "[donasi]", "pages/donasi/list");
+        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "List Donasi", "[campaign]", "pages/donasi/list");
         return modelAndView;
     }
 	
 	@GetMapping("/transaksi")
 	public ModelAndView transaksi() {
 		ModelAndView modelAndView = new ModelAndView();
-        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Transaksi Donasi", "[donasi]", "pages/donasi/transaksi");
+        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Transaksi Donasi", "[campaign]", "pages/donasi/transaksi");
         return modelAndView;
 	}
 }
