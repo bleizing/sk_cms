@@ -156,7 +156,7 @@ public class SejutaKebaikanCmsApplication {
 	private CmsGroupMenu initCmsGroupMenu(CmsGroupMenuRepository cmsGroupMenuRepository) {
 		CmsGroupMenu cmsGroupMenu = new CmsGroupMenu();
 		cmsGroupMenu.setActive(true);
-		cmsGroupMenu.setName("CMS User");
+		cmsGroupMenu.setName("Donasi");
 		
 		cmsGroupMenuRepository.save(cmsGroupMenu);
 
@@ -168,8 +168,8 @@ public class SejutaKebaikanCmsApplication {
 	private CmsMenu initCmsMenu(CmsMenuRepository cmsMenuRepository, CmsGroupMenu cmsGroupMenu) {
 		CmsMenu cmsMenu = new CmsMenu();
 		cmsMenu.setActive(true);
-		cmsMenu.setName("User CMS");
-		cmsMenu.setUrl("/pages/admin/list_user_cms");
+		cmsMenu.setName("Donasi List");
+		cmsMenu.setUrl("/pages/donasi/list");
 		cmsMenu.setLevel(1);
 		cmsMenu.setCmsGroupMenu(cmsGroupMenu);
 		

@@ -14,14 +14,14 @@ import com.infosys.sejuta_kebaikan_cms.util.CommonUtil;
 public class DonationController {
 	private static final Logger logger = LoggerFactory.getLogger(DonationController.class);
 	
-	@GetMapping("/list-donasi")
+	@GetMapping("/list")
 	public ModelAndView list(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView = CommonUtil.setModelAndView(modelAndView, null, "List Donasi", "[donasi]", "pages/donasi/list");
         return modelAndView;
     }
 	
-	@GetMapping("/transaksi-donasi")
+	@GetMapping("/transaksi")
 	public ModelAndView transaksi() {
 		ModelAndView modelAndView = new ModelAndView();
         modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Transaksi Donasi", "[donasi]", "pages/donasi/transaksi");
