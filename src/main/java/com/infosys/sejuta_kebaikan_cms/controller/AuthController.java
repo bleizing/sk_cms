@@ -26,6 +26,7 @@ public class AuthController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             modelAndView.setViewName("login");
             ConstModel.setUserCmsMenuMap(null);
+            ConstModel.userCmsPathArrayList(null);
         } else {
         	modelAndView.setViewName("redirect:/pages/dashboard");
         }

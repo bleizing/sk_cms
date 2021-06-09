@@ -33,9 +33,11 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CmsUser cmsUser = cmsUserService.findCmsUserByUsername(auth.getName());
 		cmsUserService.checkUserCmsMenu(cmsUser.getId());
+		cmsUserService.checkUserCmsRoleMenu(cmsUser.getId());
 		TreeMap<String, ArrayList<CmsMenu>> cmsMenuMap = ConstModel.getUserCmsMenuMap();
 		modelAndView.addObject("userCmsMenu", cmsMenuMap);
         modelAndView.addObject("cmsUser", cmsUser);
+        modelAndView.addObject("activeGroupMenu", "[dashboard]");
         modelAndView.addObject("title", "Beranda");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("pages/home");

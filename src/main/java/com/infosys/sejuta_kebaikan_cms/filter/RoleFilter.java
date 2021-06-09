@@ -2,7 +2,6 @@ package com.infosys.sejuta_kebaikan_cms.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,19 +13,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
-import com.infosys.sejuta_kebaikan_cms.service.cms.CmsRoleMenuService;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
+import com.infosys.sejuta_kebaikan_cms.util.CommonUtil;
 
 @Component
 public class RoleFilter extends HttpFilter {
 	private static final Logger logger = LoggerFactory.getLogger(RoleFilter.class);
-	
-	@Autowired
-	private CmsRoleMenuService cmsRoleMenuService;
 	
 	@Autowired
 	private CmsUserService cmsUserService;
@@ -38,10 +34,9 @@ public class RoleFilter extends HttpFilter {
 		if (path.startsWith("/pages/")) {
 			logger.info("RoleFilter");
 			logger.info("path = " + path);
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			CmsUser cmsUser = cmsUserService.findCmsUserByUsername(auth.getName());
-			HashMap<Long, ArrayList<String>> cmsRoleMenuMap = cmsRoleMenuService.getAllData();
-			boolean isValid = cmsRoleMenuService.isRoleMenuValid(cmsUser.getCmsRole().getId(), path);
+			Authentication auth = CommonUtil.getAuth();
+			CmsUser cmsUser = CommonUtil.getUserLoggedIn(cmsUserService);
+			boolean isValid = isRoleMenuValid(path);
 			
 			if (!isValid && !path.contains("/dashboard")) {
 				logger.info("Not Valid");
@@ -52,4 +47,20 @@ public class RoleFilter extends HttpFilter {
 
         chain.doFilter(request, response);
     }
+	
+	private boolean isRoleMenuValid(String path) {
+		boolean valid = false;
+		
+		ArrayList<String> userCmsRoleMenuArrayList = ConstModel.getUserCmsPathArrayList();
+		if (userCmsRoleMenuArrayList != null && userCmsRoleMenuArrayList.size() > 0) {
+			for (String url : userCmsRoleMenuArrayList) {
+				if (url.equals(path)) {
+					valid = true;
+					break;
+				}
+				
+			}
+		}
+		return valid;
+	}
 }

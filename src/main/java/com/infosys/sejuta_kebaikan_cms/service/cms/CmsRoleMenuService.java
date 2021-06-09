@@ -3,7 +3,6 @@ package com.infosys.sejuta_kebaikan_cms.service.cms;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,27 +40,4 @@ public class CmsRoleMenuService {
 			}
 		}
 	}
-	
-	public HashMap<Long, ArrayList<String>> getAllData() {
-		setInitData();
-		
-		return cmsRoleMenuMap;
-	}
-	
-	public Boolean isRoleMenuValid(Long roleId, String path) {
-		boolean valid = false;
-		setInitData();
-		
-		for (Map.Entry<Long, ArrayList<String>> entry : cmsRoleMenuMap.entrySet()) {
-			for (String urlMenu : entry.getValue()) {
-				if (roleId.equals(entry.getKey()) && path.equals(urlMenu)) {
-					valid = true;
-					break;
-				}
-			}
-		}
-		
-		return valid;
-	}
-
 }

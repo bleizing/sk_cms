@@ -6,7 +6,7 @@
 	<aside class="main-sidebar" th:fragment="sidebar">
 		<section class="sidebar">
 			<ul class="sidebar-menu" data-widget="tree">
-				<li>
+				<li th:classappend="${activeGroupMenu.equals('[dashboard]')} ? 'active' : ''">
 					<a th:href="@{/pages/dashboard}">
 						<i class="fa fa-home"></i>
 						<span>Beranda</span>

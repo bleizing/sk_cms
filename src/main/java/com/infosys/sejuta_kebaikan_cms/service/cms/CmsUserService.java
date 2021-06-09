@@ -13,6 +13,7 @@ import com.infosys.sejuta_kebaikan_cms.model.cms.CmsGroupMenu;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsMenu;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsGroupMenuRepository;
+import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsMenuRepository;
 import com.infosys.sejuta_kebaikan_cms.repository.cms.CmsUserRepository;
 import com.infosys.sejuta_kebaikan_cms.util.PasswordUtil;
 
@@ -23,6 +24,9 @@ public class CmsUserService {
 	
 	@Autowired
 	private CmsGroupMenuRepository cmsGroupMenuRepository;
+	
+	@Autowired
+	private CmsMenuRepository cmsMenuRepository;
 
 	public CmsUser findCmsUserByUsername(String username) {
 		return cmsUserRepository.findByUsername(username);
@@ -42,7 +46,7 @@ public class CmsUserService {
 		}
 		
 		if (cmsMenuMap.isEmpty()) {
-			List<CmsGroupMenu> cmsGroupMenus = cmsGroupMenuRepository.findGroupMenu(userId);
+			List<CmsGroupMenu> cmsGroupMenus = cmsGroupMenuRepository.findGroupMenuByUserId(userId);
 			for (CmsGroupMenu cmsGroupMenu : cmsGroupMenus) {
 				List<CmsMenu> cmsMenus = cmsGroupMenu.getCmsMenus();
 				ArrayList<CmsMenu> cmsMenuArrayList = new ArrayList<>();
@@ -59,6 +63,19 @@ public class CmsUserService {
 				}
 			}
 			ConstModel.setUserCmsMenuMap(cmsMenuMap);
+		}
+	}
+	
+	public void checkUserCmsRoleMenu(Long userId) {
+		ArrayList<String> userCmsPathArrayList = ConstModel.getUserCmsPathArrayList();
+		if (userCmsPathArrayList == null) {
+			userCmsPathArrayList = new ArrayList<>();
+		}
+		
+		if (userCmsPathArrayList.isEmpty()) {
+			List<String> cmsMenuList = cmsMenuRepository.findUrlMenuByUserId(userId);
+			userCmsPathArrayList.addAll(cmsMenuList);
+			ConstModel.userCmsPathArrayList(userCmsPathArrayList);
 		}
 	}
 }
