@@ -31,7 +31,7 @@ public class HomeController {
 	public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CmsUser cmsUser = cmsUserService.findCmsUserByEmail(auth.getName());
+        CmsUser cmsUser = cmsUserService.findCmsUserByUsername(auth.getName());
 		cmsUserService.checkUserCmsMenu(cmsUser.getId());
 		TreeMap<String, ArrayList<CmsMenu>> cmsMenuMap = ConstModel.getUserCmsMenuMap();
 		modelAndView.addObject("userCmsMenu", cmsMenuMap);

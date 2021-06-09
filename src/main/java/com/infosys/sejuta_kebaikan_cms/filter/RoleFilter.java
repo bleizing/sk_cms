@@ -39,7 +39,7 @@ public class RoleFilter extends HttpFilter {
 			logger.info("RoleFilter");
 			logger.info("path = " + path);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			CmsUser cmsUser = cmsUserService.findCmsUserByEmail(auth.getName());
+			CmsUser cmsUser = cmsUserService.findCmsUserByUsername(auth.getName());
 			HashMap<Long, ArrayList<String>> cmsRoleMenuMap = cmsRoleMenuService.getAllData();
 			boolean isValid = cmsRoleMenuService.isRoleMenuValid(cmsUser.getCmsRole().getId(), path);
 			

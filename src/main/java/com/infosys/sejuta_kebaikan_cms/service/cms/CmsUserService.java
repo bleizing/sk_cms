@@ -24,8 +24,8 @@ public class CmsUserService {
 	@Autowired
 	private CmsGroupMenuRepository cmsGroupMenuRepository;
 
-	public CmsUser findCmsUserByEmail(String email) {
-		return cmsUserRepository.findByEmail(email);
+	public CmsUser findCmsUserByUsername(String username) {
+		return cmsUserRepository.findByUsername(username);
 	}
 	
 	public CmsUser addCmsUser(CmsUser cmsUser) {

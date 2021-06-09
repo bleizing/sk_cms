@@ -14,7 +14,7 @@
 				</li>
 				
 				<th:block th:each="group : ${userCmsMenu}" th:remove="tag" th:with="pathGroup=${#strings.toLowerCase({#strings.replace(group.key,' ','-')})}">
-					<li class="treeview menu-display" th:classappend="${#httpServletRequest.requestURI.contains({pathGroup})} ? 'active' : ''">
+					<li class="treeview menu-display" th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, {pathGroup})} ? 'active' : ${#strings.containsIgnoreCase(#httpServletRequest.requestURI, {pathGroup})}">
 						<a>
 							<i class="fa fa-sliders"></i>
 							<span th:text="${group.key}"></span>
@@ -23,7 +23,7 @@
 							</span>
 						</a>
 						<ul class="treeview-menu menu-display">
-							<th:block th:each="menu : ${group.value}" th:remove="tag">
+							<th:block th:each="menu : ${group.value}" th:remove="tag" th:with="pathMenu=${#strings.toLowerCase({#strings.replace(menu.url,' ','-')})}">
 								<li class="menu-display" th:classappend="${#httpServletRequest.requestURI.contains({menu.url})} ? 'active' : ''">
 									<a th:href="@{|${menu.url}|}">
 										<i class="fa fa-phone-square"></i>
