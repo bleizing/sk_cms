@@ -19,7 +19,6 @@ public class StartupListener implements ApplicationListener<ApplicationReadyEven
 	
 	@Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        // code here
 		logger.info("Startup Listener");
 		CommonUtil.setCmsUserService(cmsUserService);
     }

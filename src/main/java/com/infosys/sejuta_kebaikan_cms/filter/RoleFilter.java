@@ -11,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
-import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
-import com.infosys.sejuta_kebaikan_cms.util.CommonUtil;
 
 @Component
 public class RoleFilter extends HttpFilter {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(RoleFilter.class);
 	
 	@Override
@@ -29,8 +30,6 @@ public class RoleFilter extends HttpFilter {
 		if (path.startsWith("/pages/")) {
 			logger.info("RoleFilter");
 			logger.info("path = " + path);
-			Authentication auth = CommonUtil.getAuth();
-			CmsUser cmsUser = CommonUtil.getUserLoggedIn();
 			boolean isValid = isRoleMenuValid(path);
 			
 			if (!isValid && !path.contains("/dashboard")) {
