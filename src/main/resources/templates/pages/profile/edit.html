@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/template_main}">
+<head>
+</head>
+<body>
+	<div class="col" layout:fragment="content">
+		<form action="#" th:action="@{/pages/profile/edit(id=${cmsUserId})}" method="post" th:object="${cmsUser}">
+			<div class="form-group">
+		    	<label for="username">Username</label>
+	      		<input type="username" class="form-control" id="username" placeholder="Username" th:field="*{username}" readonly>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="name">Name</label>
+	      		<input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}">
+	      		<p  th:if="${#fields.hasErrors('name')}" th:class="${#fields.hasErrors('name')}? error">Invalid Name</p>
+		  	</div>
+			<div class="form-group">
+		    	<label for="email">Email</label>
+	      		<input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
+	      		<p  th:if="${#fields.hasErrors('email')}" th:class="${#fields.hasErrors('email')}? error">Invalid Email</p>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="phone-number">Phone Number</label>
+	      		<input type="text" class="form-control" id="phone-number" placeholder="Phone Number" th:field="*{phoneNumber}">
+	      		<p  th:if="${#fields.hasErrors('phoneNumber')}" th:class="${#fields.hasErrors('phoneNumber')}? error">Invalid Phone Number</p>
+		  	</div>
+		  	
+		  	<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+</body>
+</html>

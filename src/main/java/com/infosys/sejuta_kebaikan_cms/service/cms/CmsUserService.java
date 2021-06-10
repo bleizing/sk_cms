@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsGroupMenu;
@@ -27,9 +28,13 @@ public class CmsUserService {
 	
 	@Autowired
 	private CmsMenuRepository cmsMenuRepository;
+	
+	public CmsUser getUserById(Long id) {
+		return cmsUserRepository.findByIdAndActive(id, true);
+	}
 
 	public CmsUser findCmsUserByUsername(String username) {
-		return cmsUserRepository.findByUsername(username);
+		return cmsUserRepository.findByUsernameAndActive(username, true);
 	}
 	
 	public CmsUser addCmsUser(CmsUser cmsUser) {
@@ -37,6 +42,18 @@ public class CmsUserService {
 		cmsUser.setPassword(PasswordUtil.hashPassword(cmsUser.getPassword()));
 		
 		return cmsUserRepository.save(cmsUser);
+	}
+	
+	@Transactional
+	public void editCmsUser(Long id, CmsUser cmsUser) {
+//		cmsUserRepository.save(cmsUser);
+		CmsUser cmsUserDb = getUserById(id);
+		cmsUserDb.setName(cmsUser.getName());
+		cmsUserDb.setEmail(cmsUser.getEmail());
+		cmsUserDb.setPhoneNumber(cmsUser.getPhoneNumber());
+		cmsUserRepository.save(cmsUserDb);
+		
+		ConstModel.setCmsUserLoggedIn(cmsUserDb);
 	}
 	
 	public void checkUserCmsMenu(Long userId) {
@@ -75,7 +92,7 @@ public class CmsUserService {
 		if (userCmsPathArrayList.isEmpty()) {
 			List<String> cmsMenuList = cmsMenuRepository.findUrlMenuByUserId(userId);
 			userCmsPathArrayList.addAll(cmsMenuList);
-			ConstModel.userCmsPathArrayList(userCmsPathArrayList);
+			ConstModel.setUserCmsPathArrayList(userCmsPathArrayList);
 		}
 	}
 }

@@ -18,9 +18,7 @@ public class HomeController {
 	@GetMapping
 	public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-        
         modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Beranda", "[dashboard]", "pages/home");
-        
         return modelAndView;
     }
 	

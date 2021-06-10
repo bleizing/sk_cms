@@ -36,12 +36,12 @@ public class CommonUtil {
 		return userLoggedIn;
 	}
 	
-	
 	public static CmsUser getUserLoggedIn() {
-		CmsUser cmsUser = null;
+		CmsUser cmsUser = ConstModel.getCmsUserLoggedIn();
 		Authentication auth = CommonUtil.getAuth();
-		if (CommonUtil.isUserLoggedIn()) {
+		if (cmsUser == null && CommonUtil.isUserLoggedIn()) {
 			cmsUser = CommonUtil.cmsUserService.findCmsUserByUsername(auth.getName());
+			ConstModel.setCmsUserLoggedIn(cmsUser);
 		}
 		
 		return cmsUser;
@@ -49,10 +49,12 @@ public class CommonUtil {
 	
 	public static ModelAndView setModelAndView(ModelAndView modelAndView, HashMap<String, Object> dataHashMap, String title, String activeGroupMenu, String viewName) {
 		CmsUser cmsUser = getUserLoggedIn();
+		
 		if (!CommonUtil.isModelExists()) {
 			cmsUserService.checkUserCmsMenu(cmsUser.getId());
 			cmsUserService.checkUserCmsRoleMenu(cmsUser.getId());
 		}
+		
 		TreeMap<String, ArrayList<CmsMenu>> cmsMenuMap = ConstModel.getUserCmsMenuMap();
 		
 		if (dataHashMap != null && !dataHashMap.isEmpty()) {
@@ -75,11 +77,15 @@ public class CommonUtil {
 	}
 	
 	public static boolean isModelExists() {
-		return ConstModel.getUserCmsMenuMap() == null ? false : ConstModel.getUserCmsPathArrayList() == null ? false : true;
+		if (ConstModel.getCmsUserLoggedIn() == null || (ConstModel.getUserCmsMenuMap() == null && ConstModel.getUserCmsPathArrayList() == null)) {
+			return false;
+		}
+		return true;
 	}
 	
 	public static void clearModelExists() {
+		ConstModel.setCmsUserLoggedIn(null);
 		ConstModel.setUserCmsMenuMap(null);
-		ConstModel.userCmsPathArrayList(null);
+		ConstModel.setUserCmsPathArrayList(null);
 	}
 }

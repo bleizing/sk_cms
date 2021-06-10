@@ -60,6 +60,8 @@ public class SejutaKebaikanCmsApplication {
 			CmsRole cmsRole = initCmsRole(cmsRoleRepository);
 			initCmsRoleMenu(cmsRoleMenuRepository, cmsMenu, cmsRole);
 			initCmsUser(cmsUserRepository, merchant, cmsRole);
+			
+			initProfile(cmsMenuRepository, cmsRoleMenuRepository, cmsRole);
 		}
 		logger.info("Data Available");
 	}
@@ -150,7 +152,6 @@ public class SejutaKebaikanCmsApplication {
 		logger.info("Init Merchant Success");
 		
 		return merchant;
-		
 	}
 	
 	private CmsGroupMenu initCmsGroupMenu(CmsGroupMenuRepository cmsGroupMenuRepository) {
@@ -220,5 +221,24 @@ public class SejutaKebaikanCmsApplication {
 		cmsUserRepository.save(cmsUser);
 
 		logger.info("Init CMS User Success");
+	}
+	
+	private void initProfile(CmsMenuRepository cmsMenuRepository, CmsRoleMenuRepository cmsRoleMenuRepository, CmsRole cmsRole) {
+		CmsMenu cmsMenu = new CmsMenu();
+		cmsMenu.setActive(true);
+		cmsMenu.setName("Edit Profile");
+		cmsMenu.setUrl("/pages/profile/edit");
+		cmsMenu.setLevel(1);
+		cmsMenu.setCmsGroupMenu(null);
+		
+		cmsMenuRepository.save(cmsMenu);
+		
+		CmsRoleMenu cmsRoleMenu = new CmsRoleMenu();
+		cmsRoleMenu.setActive(true);
+		cmsRoleMenu.setCmsMenu(cmsMenu);
+		cmsRoleMenu.setCmsRole(cmsRole);
+		cmsRoleMenu.setNeedApproval(false);
+		
+		cmsRoleMenuRepository.save(cmsRoleMenu);
 	}
 }
