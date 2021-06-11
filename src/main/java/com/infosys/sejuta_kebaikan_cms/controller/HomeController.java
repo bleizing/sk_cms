@@ -19,14 +19,12 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 		
 	@GetMapping
-	public ModelAndView home(@PathParam("test") String test){
-		logger.info("test = " + test);
+	public ModelAndView home(@PathParam("showAlert") Boolean showAlert, @PathParam("alertAction") String alertAction, @PathParam("alertTitle") String alertTitle, @PathParam("alertType") String alertType, @PathParam("alertMessage") String alertMessage){
+		logger.info("showAlert = " + showAlert);
         ModelAndView modelAndView = new ModelAndView();
         HashMap<String, Object> dataHashMap = new HashMap<>();
-        if (test != null && !test.equals("")) {
-	        dataHashMap.put("alertType", "warning");
-	        dataHashMap.put("alertTitle", "WARNING!");
-	        dataHashMap.put("alertMessage", test);
+        if (showAlert != null && showAlert) {
+        	dataHashMap = CommonUtil.dataHashMapAlert(dataHashMap, alertAction, alertTitle, alertType, alertMessage);
         }
         modelAndView = CommonUtil.setModelAndView(modelAndView, dataHashMap, "Beranda", "[dashboard]", "pages/home");
         return modelAndView;

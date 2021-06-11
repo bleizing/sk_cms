@@ -6,10 +6,10 @@
 <head>
 </head>
 <body>
-	<div th:if="${alertType}" layout:fragment="alert">
+	<div th:if="${showAlert}" layout:fragment="alert">
 		<div class="alert alert-dismissible" th:classappend="|alert-${alertType}|" role="alert">
 		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		  	<strong><th:block th:text="${alertTitle}" th:remove="tag"></th:block></strong> <th:block th:text="${alertMessage}" th:remove="tag"></th:block>
+		  	<strong><th:block th:text="|${alertAction} ${alertTitle}!|" th:remove="tag"></th:block></strong> <th:block th:text="${alertMessage}" th:remove="tag"></th:block>
 		</div>
 	</div>
 	<div class="col" layout:fragment="content">

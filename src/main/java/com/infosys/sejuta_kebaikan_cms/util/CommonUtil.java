@@ -76,6 +76,55 @@ public class CommonUtil {
         return modelAndView;
 	}
 	
+	public static ModelAndView alertModelAndView(ModelAndView modelAndView, String action, String title, String type, String message) {
+		modelAndView.addObject("showAlert", true);
+		modelAndView.addObject("alertAction", action);
+		modelAndView.addObject("alertTitle", title);
+		modelAndView.addObject("alertType", type);
+		modelAndView.addObject("alertMessage", message);
+		return modelAndView;
+	}
+
+	
+	public static ModelAndView alertCreateSuccess(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Create", "Success", "success", "Berhasil Menambahkan Data");
+		return modelAndView;
+	}
+	
+	public static ModelAndView alertCreateFailed(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Create", "Failed", "danger", "Gagal Menambahkan Data");
+		return modelAndView;
+	}
+	
+	public static ModelAndView alertUpdateSuccess(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Update", "Success", "success", "Berhasil Mengubah Data");
+		return modelAndView;
+	}
+	
+	public static ModelAndView alertUpdateFailed(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Update", "Failed", "danger", "Gagal Mengubah Data");
+		return modelAndView;
+	}
+	
+	public static ModelAndView alertDeleteSuccess(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Delete", "Success", "success", "Berhasil Menghapus Data");
+		return modelAndView;
+	}
+	
+	public static ModelAndView alertDeleteFailed(ModelAndView modelAndView) {
+		CommonUtil.alertModelAndView(modelAndView, "Delete", "Failed", "danger", "Gagal Menghapus Data");
+		return modelAndView;
+	}
+	
+	public static HashMap<String, Object> dataHashMapAlert(HashMap<String, Object> dataHashMap, String action, String title, String type, String message) {
+		dataHashMap.put("showAlert", true);
+		dataHashMap.put("alertAction", action);
+        dataHashMap.put("alertType", type);
+        dataHashMap.put("alertTitle", title);
+        dataHashMap.put("alertMessage", message);
+        return dataHashMap;
+	}
+	
 	public static boolean isModelExists() {
 		if (ConstModel.getCmsUserLoggedIn() == null || (ConstModel.getUserCmsMenuMap() == null && ConstModel.getUserCmsPathArrayList() == null)) {
 			return false;
@@ -87,5 +136,9 @@ public class CommonUtil {
 		ConstModel.setCmsUserLoggedIn(null);
 		ConstModel.setUserCmsMenuMap(null);
 		ConstModel.setUserCmsPathArrayList(null);
+	}
+	
+	public static boolean isValidNumberValue(String string) {
+		return string.matches("\\d+");
 	}
 }

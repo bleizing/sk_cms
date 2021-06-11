@@ -44,12 +44,16 @@ public class ProfileController {
 		
 		String viewName = "redirect:/pages/dashboard";
 		
-		if (!cmsUser.getPhoneNumber().matches("\\d+")) {
+		if (!CommonUtil.isValidNumberValue(cmsUser.getPhoneNumber())) {
 			result.rejectValue("phoneNumber", "error.phoneNumber", "No HP Harus Masukan Angka");
 		}
 		
+		if (cmsUserService.phoneNumberExists(cmsUser.getPhoneNumber(), id)) {
+			result.rejectValue("phoneNumber", "error.phoneNumber", "No HP Sudah Terdaftar");
+		}
+		
 		if (cmsUserService.emailExists(cmsUser.getEmail(), id)) {
-			result.rejectValue("email", "error.email", "Email Sudah Tersedia");
+			result.rejectValue("email", "error.email", "Email Sudah Terdaftar");
 		}
 		
 		if (result.hasErrors()) {
@@ -60,9 +64,8 @@ public class ProfileController {
             modelAndView.addObject("cmsUser", cmsUser);
 	    } else {
 	        cmsUserService.editCmsUser(id, cmsUser);
+	        modelAndView = CommonUtil.alertUpdateSuccess(modelAndView);
 	        modelAndView.setViewName(viewName);
-			modelAndView.addObject("test", "test");
-			modelAndView.addObject("test2", "test2");
 	    }
         
         return modelAndView;

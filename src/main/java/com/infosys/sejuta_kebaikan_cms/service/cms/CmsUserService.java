@@ -70,6 +70,20 @@ public class CmsUserService {
 		return emailExists;
 	}
 	
+	public boolean phoneNumberExists(String phoneNumber, Long id) {
+		boolean phoneNumberExists = true;
+		CmsUser cmsUserDb = getUserById(id);
+		if (cmsUserDb.getEmail().equals(phoneNumber)) {
+			phoneNumberExists = false;
+		}
+		
+		if (phoneNumberExists) {
+			phoneNumberExists = cmsUserRepository.findByPhoneNumber(phoneNumber) == null ? false : true;
+		}
+		
+		return phoneNumberExists;
+	}
+	
 	public void loginSuccess(CmsUser cmsUser) {
 		cmsUser.setLastLoginAt(new Date());
 		cmsUser.setFailedLoginAttempt(0);
