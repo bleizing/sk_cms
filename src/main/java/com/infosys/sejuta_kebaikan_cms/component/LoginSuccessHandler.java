@@ -25,12 +25,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
      
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        ShopmeUserDetails userDetails =  (ShopmeUserDetails) authentication.getPrincipal();
-//        User user = userDetails.getUser();
-//        if (user.getFailedAttempt() > 0) {
-//            userService.resetFailedAttempts(user.getEmail());
-//        }
-    	
     	String username = authentication.getName();
     	CmsUser cmsUser = cmsUserService.findCmsUserByUsername(username);
     	if (cmsUser.getActive() && cmsUser.isAccountNonLocked()) {

@@ -28,16 +28,18 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
        
        if (cmsUser != null) {
            if (cmsUser.isAccountNonLocked()) {
-               if (cmsUser.getFailedLoginAttempt() <= cmsUserService.MAX_FAILED_ATTEMPTS - 1) {
+        	   // Max Attemp to Failed Login
+               if (cmsUser.getFailedLoginAttempt() < cmsUserService.MAX_FAILED_ATTEMPTS - 1) {
             	   cmsUserService.loginFailed(cmsUser);
                } else {
                    cmsUserService.lock(cmsUser);
                    exception = new LockedException("Akun Anda Terkunci Setelah 3 Kali Gagal Login. Harap Hubungi Admin");
                }
-           } else {
-               if (cmsUserService.unlockWhenTimeExpired(cmsUser)) {
-                   exception = new LockedException("Your account has been unlocked. Please try to login again.");
-               }
+//           } else {
+//        	   // Unlock Account
+//               if (cmsUserService.unlockWhenTimeExpired(cmsUser)) {
+//                   exception = new LockedException("Your account has been unlocked. Please try to login again.");
+//               }
            }
        }
        
