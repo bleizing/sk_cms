@@ -48,7 +48,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     		.csrf().disable()
         	.formLogin()
     		.loginPage("/login")
-    		.failureUrl("/login?error=true")
     		.defaultSuccessUrl("/pages/dashboard")
     		.usernameParameter("username")
     		.passwordParameter("password")

@@ -52,6 +52,12 @@ public class CmsUser extends BaseModel {
 	@Column
 	private Integer failedLoginAttempt = 0;
 	
+	@Column
+	private boolean accountNonLocked = true;
+	
+	@Column
+	private Date lockTime;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
@@ -122,6 +128,22 @@ public class CmsUser extends BaseModel {
 
 	public void setFailedLoginAttempt(Integer failedLoginAttempt) {
 		this.failedLoginAttempt = failedLoginAttempt;
+	}
+
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public Date getLockTime() {
+		return lockTime;
+	}
+
+	public void setLockTime(Date lockTime) {
+		this.lockTime = lockTime;
 	}
 
 	public Merchant getMerchant() {

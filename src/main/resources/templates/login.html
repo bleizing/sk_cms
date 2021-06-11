@@ -22,8 +22,8 @@
 					<input id="password" name="password" type="password" class="form-control" placeholder="Password">
 					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
-				<div align="center" th:if="${param.error}">
-		            <p style="font-size: 20; color: #FF1C19;">Username atau Password Salah</p>
+		        <div align="center" th:if="${param.error}">
+		            <p style="font-size: 20; color: #FF1C19;">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
 		        </div>
 				<div class="row">
 					<div class="col-xs-8"></div>

@@ -24,6 +24,10 @@ public class CmsUserService {
 	@Autowired
 	private CmsUserRepository cmsUserRepository;
 	
+	public static final int MAX_FAILED_ATTEMPTS = 3;
+    
+    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+	
 	@Autowired
 	private CmsGroupMenuRepository cmsGroupMenuRepository;
 	
@@ -88,6 +92,7 @@ public class CmsUserService {
 		cmsUser.setLastLoginAt(new Date());
 		cmsUser.setFailedLoginAttempt(0);
 		cmsUserRepository.save(cmsUser);
+		ConstModel.setCmsUserLoggedIn(cmsUser);
 	}
 	
 	public void loginFailed(CmsUser cmsUser) {
@@ -97,6 +102,30 @@ public class CmsUserService {
 		cmsUser.setFailedLoginAttempt(failedLoginAttempt);
 		cmsUserRepository.save(cmsUser);
 	}
+	
+	public void lock(CmsUser cmsUser) {
+		cmsUser.setAccountNonLocked(false);
+		cmsUser.setLockTime(new Date());
+         
+        cmsUserRepository.save(cmsUser);
+    }
+	
+	public boolean unlockWhenTimeExpired(CmsUser cmsUser) {
+        long lockTimeInMillis = cmsUser.getLockTime().getTime();
+        long currentTimeInMillis = System.currentTimeMillis();
+         
+        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
+        	cmsUser.setAccountNonLocked(true);
+        	cmsUser.setLockTime(null);
+        	cmsUser.setFailedLoginAttempt(0);
+             
+            cmsUserRepository.save(cmsUser);
+             
+            return true;
+        }
+         
+        return false;
+    }
 	
 	public void checkUserCmsMenu(Long userId) {
 		TreeMap<String, ArrayList<CmsMenu>> cmsMenuMap = ConstModel.getUserCmsMenuMap();

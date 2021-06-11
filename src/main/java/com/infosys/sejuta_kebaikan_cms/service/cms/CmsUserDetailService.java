@@ -44,7 +44,7 @@ public class CmsUserDetailService implements UserDetailsService {
     }
 
     private UserDetails buildUserForAuthentication(CmsUser cmsUser, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(cmsUser.getUsername(), cmsUser.getPassword(), cmsUser.getActive(), true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User(cmsUser.getUsername(), cmsUser.getPassword(), cmsUser.getActive(), true, true, cmsUser.isAccountNonLocked(), authorities);
     }
 
 }
