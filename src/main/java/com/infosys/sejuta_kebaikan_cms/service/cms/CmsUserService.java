@@ -46,7 +46,6 @@ public class CmsUserService {
 	
 	@Transactional
 	public void editCmsUser(Long id, CmsUser cmsUser) {
-//		cmsUserRepository.save(cmsUser);
 		CmsUser cmsUserDb = getUserById(id);
 		cmsUserDb.setName(cmsUser.getName());
 		cmsUserDb.setEmail(cmsUser.getEmail());
@@ -54,6 +53,20 @@ public class CmsUserService {
 		cmsUserRepository.save(cmsUserDb);
 		
 		ConstModel.setCmsUserLoggedIn(cmsUserDb);
+	}
+	
+	public boolean emailExists(String email, Long id) {
+		boolean emailExists = true;
+		CmsUser cmsUserDb = getUserById(id);
+		if (cmsUserDb.getEmail().equals(email)) {
+			emailExists = false;
+		}
+		
+		if (emailExists) {
+			emailExists = cmsUserRepository.findByEmail(email) == null ? false : true;
+		}
+		
+		return emailExists;
 	}
 	
 	public void checkUserCmsMenu(Long userId) {
@@ -74,9 +87,9 @@ public class CmsUserService {
 			}
 			
 			for (Entry<String, ArrayList<CmsMenu>> entry : cmsMenuMap.entrySet()) {
-				System.out.println("Group name = " + entry.getKey());
+//				System.out.println("Group name = " + entry.getKey());
 				for (CmsMenu cmsMenu : entry.getValue()) {
-					System.out.println("Menu name = " + cmsMenu.getName());
+//					System.out.println("Menu name = " + cmsMenu.getName());
 				}
 			}
 			ConstModel.setUserCmsMenuMap(cmsMenuMap);

@@ -24,6 +24,7 @@
 			</section>
 
 			<section class="content container-fluid">
+				<div layout:fragment="alert"></div>
 				<div class="row content-body">
 					<div class="col" layout:fragment="content">
 						Content
@@ -38,5 +39,6 @@
 	</div>
 
 	<script th:src="@{/assets/admin/js/adminlte.min.js}"></script>
+	<script type="text/javascript" layout:fragment="script-footer"></script>
 </body>
 </html>

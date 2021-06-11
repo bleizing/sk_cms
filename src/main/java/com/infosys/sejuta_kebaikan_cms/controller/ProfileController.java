@@ -2,6 +2,7 @@ package com.infosys.sejuta_kebaikan_cms.controller;
 
 import java.util.HashMap;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
@@ -31,26 +32,37 @@ public class ProfileController {
 	public ModelAndView edit(@PathParam("id") Long id){
 		logger.info("edit profile");
         ModelAndView modelAndView = new ModelAndView();
-        HashMap<String, Object> dataHashMap = new HashMap<>();
-        dataHashMap.put("cmsUserId", id);
-        modelAndView = CommonUtil.setModelAndView(modelAndView, dataHashMap, "Edit Profile", "[profile]", "pages/profile/edit");
+        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Edit Profile", "[profile]", "pages/profile/edit");
         
         return modelAndView;
     }
 	
 	@PostMapping("/edit")
-	public ModelAndView saveEdit(@PathParam("id") Long id, @ModelAttribute("cmsUser") CmsUser cmsUser, BindingResult result) {
+	public ModelAndView saveEdit(@PathParam("id") Long id, @ModelAttribute("cmsUser") @Valid CmsUser cmsUser, BindingResult result) {
 		logger.info("save edit profile");
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String viewName = "redirect:/pages/dashboard";
-        modelAndView.setViewName(viewName);
-        
-        cmsUserService.editCmsUser(id, cmsUser);
-        
-        if (result.hasErrors()) {
-        	viewName = "pages/profile/edit?id=" + id;
-            modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Edit Profile", "[profile]", viewName);
+		
+		if (!cmsUser.getPhoneNumber().matches("\\d+")) {
+			result.rejectValue("phoneNumber", "error.phoneNumber", "No HP Harus Masukan Angka");
+		}
+		
+		if (cmsUserService.emailExists(cmsUser.getEmail(), id)) {
+			result.rejectValue("email", "error.email", "Email Sudah Tersedia");
+		}
+		
+		if (result.hasErrors()) {
+        	viewName = "pages/profile/edit";
+        	HashMap<String, Object> dataHashMap = new HashMap<>();
+        	dataHashMap.put("id", id);
+            modelAndView = CommonUtil.setModelAndView(modelAndView, dataHashMap, "Edit Profile", "[profile]", viewName);
+            modelAndView.addObject("cmsUser", cmsUser);
+	    } else {
+	        cmsUserService.editCmsUser(id, cmsUser);
+	        modelAndView.setViewName(viewName);
+			modelAndView.addObject("test", "test");
+			modelAndView.addObject("test2", "test2");
 	    }
         
         return modelAndView;

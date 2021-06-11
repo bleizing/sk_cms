@@ -9,4 +9,5 @@ import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 public interface CmsUserRepository extends JpaRepository<CmsUser, Long> {
 	CmsUser findByUsernameAndActive(String username, boolean active);
 	CmsUser findByIdAndActive(Long id, boolean active);
+	CmsUser findByEmail(String email);
 }

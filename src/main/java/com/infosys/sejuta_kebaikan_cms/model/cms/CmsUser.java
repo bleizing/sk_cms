@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 import com.infosys.sejuta_kebaikan_cms.model.BaseModel;
 import com.infosys.sejuta_kebaikan_cms.model.Merchant;
@@ -31,6 +32,7 @@ public class CmsUser extends BaseModel {
 	
 	@NotNull
 	@Column(unique = true)
+	@Email
 	private String email;
 	
 	@NotNull

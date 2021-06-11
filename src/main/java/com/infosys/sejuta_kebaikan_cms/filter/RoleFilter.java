@@ -9,8 +9,6 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
@@ -21,19 +19,15 @@ public class RoleFilter extends HttpFilter {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LoggerFactory.getLogger(RoleFilter.class);
 	
 	@Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) 
         throws IOException, ServletException {
 		String path = request.getRequestURI();
 		if (path.startsWith("/pages/")) {
-			logger.info("RoleFilter");
-			logger.info("path = " + path);
 			boolean isValid = isRoleMenuValid(path);
 			
 			if (!isValid && !path.contains("/dashboard")) {
-				logger.info("Not Valid");
 				((HttpServletResponse) response).sendRedirect("/pages/dashboard");
 				return;
 			}

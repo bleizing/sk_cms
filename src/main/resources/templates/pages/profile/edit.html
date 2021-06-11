@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="col" layout:fragment="content">
-		<form action="#" th:action="@{/pages/profile/edit(id=${cmsUserId})}" method="post" th:object="${cmsUser}">
+		<form action="#" th:action="@{/pages/profile/edit(id=${#httpServletRequest.getParameter('id')})}" method="post" th:object="${cmsUser}">
 			<div class="form-group">
 		    	<label for="username">Username</label>
 	      		<input type="username" class="form-control" id="username" placeholder="Username" th:field="*{username}" readonly>
@@ -15,17 +15,22 @@
 		  	<div class="form-group">
 		    	<label for="name">Name</label>
 	      		<input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}">
-	      		<p  th:if="${#fields.hasErrors('name')}" th:class="${#fields.hasErrors('name')}? error">Invalid Name</p>
+	      		<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="error"></p>
 		  	</div>
 			<div class="form-group">
 		    	<label for="email">Email</label>
 	      		<input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
-	      		<p  th:if="${#fields.hasErrors('email')}" th:class="${#fields.hasErrors('email')}? error">Invalid Email</p>
+	      		<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:class="error"></p>
 		  	</div>
 		  	<div class="form-group">
 		    	<label for="phone-number">Phone Number</label>
-	      		<input type="text" class="form-control" id="phone-number" placeholder="Phone Number" th:field="*{phoneNumber}">
-	      		<p  th:if="${#fields.hasErrors('phoneNumber')}" th:class="${#fields.hasErrors('phoneNumber')}? error">Invalid Phone Number</p>
+		    	<!-- <div th:classappend="${#fields.hasErrors('phoneNumber')} ? 'input-icon right' : ''">
+					 <i th:if="${#fields.hasErrors('phoneNumber')}" class="fa fa-exclamation tooltips" data-original-title="please enter a valid first name" data-container="body"></i>
+					 <input type="text" class="form-control" id="phone-number" placeholder="Phone Number" th:field="*{phoneNumber}">
+					 <span th:if="${#fields.hasErrors('phoneNumber')}" class="help-block" th:errors="*{phoneNumber}"></span>
+				</div> -->
+				<input type="text" class="form-control" id="phone-number" placeholder="Phone Number" th:field="*{phoneNumber}">
+	      		<p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" th:class="error"></p>
 		  	</div>
 		  	
 		  	<button type="submit" class="btn btn-default">Submit</button>

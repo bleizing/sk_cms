@@ -1,5 +1,9 @@
 package com.infosys.sejuta_kebaikan_cms.controller;
 
+import java.util.HashMap;
+
+import javax.websocket.server.PathParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,9 +20,16 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(SejutaKebaikanCmsApplication.class);
 		
 	@GetMapping
-	public ModelAndView home(){
+	public ModelAndView home(@PathParam("test") String test){
+		logger.info("test = " + test);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Beranda", "[dashboard]", "pages/home");
+        HashMap<String, Object> dataHashMap = new HashMap<>();
+        if (test != null && !test.equals("")) {
+	        dataHashMap.put("alertType", "warning");
+	        dataHashMap.put("alertTitle", "WARNING!");
+	        dataHashMap.put("alertMessage", test);
+        }
+        modelAndView = CommonUtil.setModelAndView(modelAndView, dataHashMap, "Beranda", "[dashboard]", "pages/home");
         return modelAndView;
     }
 	
