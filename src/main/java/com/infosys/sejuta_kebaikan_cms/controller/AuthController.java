@@ -29,23 +29,4 @@ public class AuthController {
         return modelAndView;
     }
 	
-//	@PostMapping("/registration")
-//	public ModelAndView processLogin(@Validated CmsUser cmsUser, BindingResult bindingResult) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        CmsUser cmsUserExist = cmsUserService.findCmsUserByEmail(cmsUser.getEmail());
-////        if (cmsUserExist != null) {
-////            bindingResult
-////                    .rejectValue("email", "error.user",
-////                            "Email sudah terdaftar");
-////        }
-////        if (bindingResult.hasErrors()) {
-////            modelAndView.setViewName("/pages/admin/add_cms_user");
-////        } else {
-////            cmsUserService.addCmsUser(cmsUser);
-//            modelAndView.addObject("cmsUser", cmsUserExist);
-//            modelAndView.setViewName("/pages/home");
-//
-////        }
-//        return modelAndView;
-//    }
 }

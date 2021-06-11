@@ -50,7 +50,7 @@ public class CmsUser extends BaseModel {
 	private Date failedLoginAt;
 	
 	@Column
-	private Integer failedLoginAttempt;
+	private Integer failedLoginAttempt = 0;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merchant_id")

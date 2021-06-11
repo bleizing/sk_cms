@@ -1,6 +1,7 @@
 package com.infosys.sejuta_kebaikan_cms.service.cms;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -67,6 +68,20 @@ public class CmsUserService {
 		}
 		
 		return emailExists;
+	}
+	
+	public void loginSuccess(CmsUser cmsUser) {
+		cmsUser.setLastLoginAt(new Date());
+		cmsUser.setFailedLoginAttempt(0);
+		cmsUserRepository.save(cmsUser);
+	}
+	
+	public void loginFailed(CmsUser cmsUser) {
+		cmsUser.setFailedLoginAt(new Date());
+		Integer failedLoginAttempt = cmsUser.getFailedLoginAttempt();
+		failedLoginAttempt++;
+		cmsUser.setFailedLoginAttempt(failedLoginAttempt);
+		cmsUserRepository.save(cmsUser);
 	}
 	
 	public void checkUserCmsMenu(Long userId) {

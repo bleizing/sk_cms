@@ -10,18 +10,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.infosys.sejuta_kebaikan_cms.component.LoginFailureHandler;
+import com.infosys.sejuta_kebaikan_cms.component.LoginSuccessHandler;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserDetailService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
     @Autowired
     private CmsUserDetailService cmsUserDetailService;
-
-
+    
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+    
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,11 +48,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     		.csrf().disable()
         	.formLogin()
     		.loginPage("/login")
-//    		.loginProcessingUrl("/login")
     		.failureUrl("/login?error=true")
     		.defaultSuccessUrl("/pages/dashboard")
     		.usernameParameter("username")
     		.passwordParameter("password")
+    		.failureHandler(loginFailureHandler)
+        	.successHandler(loginSuccessHandler)
         .and()
         	.logout()
         	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -59,4 +67,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .ignoring()
         .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/assets/**", "/scripts/**");
     }
+    
 }
