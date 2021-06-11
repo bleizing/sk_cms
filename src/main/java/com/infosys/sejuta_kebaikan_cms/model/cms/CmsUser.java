@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 import com.infosys.sejuta_kebaikan_cms.model.BaseModel;
 import com.infosys.sejuta_kebaikan_cms.model.Merchant;
@@ -31,6 +32,7 @@ public class CmsUser extends BaseModel {
 	
 	@NotNull
 	@Column(unique = true)
+	@Email
 	private String email;
 	
 	@NotNull
@@ -48,7 +50,13 @@ public class CmsUser extends BaseModel {
 	private Date failedLoginAt;
 	
 	@Column
-	private Integer failedLoginAttempt;
+	private Integer failedLoginAttempt = 0;
+	
+	@Column
+	private boolean accountNonLocked = true;
+	
+	@Column
+	private Date lockTime;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "merchant_id")
@@ -120,6 +128,22 @@ public class CmsUser extends BaseModel {
 
 	public void setFailedLoginAttempt(Integer failedLoginAttempt) {
 		this.failedLoginAttempt = failedLoginAttempt;
+	}
+
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public Date getLockTime() {
+		return lockTime;
+	}
+
+	public void setLockTime(Date lockTime) {
+		this.lockTime = lockTime;
 	}
 
 	public Merchant getMerchant() {

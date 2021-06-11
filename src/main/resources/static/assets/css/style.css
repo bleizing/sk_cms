@@ -1,0 +1,9 @@
+.content-body {
+	background-color:white;
+	margin: 0 auto;
+	padding: 1.5em;
+}
+
+.error {
+    color: red;
+}

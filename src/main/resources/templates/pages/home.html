@@ -6,8 +6,21 @@
 <head>
 </head>
 <body>
-	<section class="content container-fluid" layout:fragment="content">
+	<div th:if="${showAlert}" layout:fragment="alert">
+		<div class="alert alert-dismissible" th:classappend="|alert-${alertType}|" role="alert">
+		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  	<strong><th:block th:text="|${alertAction} ${alertTitle}!|" th:remove="tag"></th:block></strong> <th:block th:text="${alertMessage}" th:remove="tag"></th:block>
+		</div>
+	</div>
+	<div class="col" layout:fragment="content">
 		<h1>Hello <th:block th:text="${cmsUser.name}" th:remove="tag"></th:block>!</h1>
-	</section>
+		<!-- <th:block th:if="${#ctx.containsVariable('test')}" th:text="${test}" th:remove="tag"></th:block> -->
+	</div>
+	
+	<script layout:fragment="script-footer">
+		var currURL = window.location.href;
+	    var url = (currURL.split(window.location.host)[1]).split("?")[0];
+	    window.history.pushState({}, document.title, url);
+	</script>
 </body>
 </html>

@@ -1,12 +1,14 @@
 package com.infosys.sejuta_kebaikan_cms.service.cms;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsGroupMenu;
@@ -22,14 +24,22 @@ public class CmsUserService {
 	@Autowired
 	private CmsUserRepository cmsUserRepository;
 	
+	public static final int MAX_FAILED_ATTEMPTS = 3;
+    
+    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+	
 	@Autowired
 	private CmsGroupMenuRepository cmsGroupMenuRepository;
 	
 	@Autowired
 	private CmsMenuRepository cmsMenuRepository;
+	
+	public CmsUser getUserById(Long id) {
+		return cmsUserRepository.findByIdAndActive(id, true);
+	}
 
 	public CmsUser findCmsUserByUsername(String username) {
-		return cmsUserRepository.findByUsername(username);
+		return cmsUserRepository.findByUsernameAndActive(username, true);
 	}
 	
 	public CmsUser addCmsUser(CmsUser cmsUser) {
@@ -38,6 +48,84 @@ public class CmsUserService {
 		
 		return cmsUserRepository.save(cmsUser);
 	}
+	
+	@Transactional
+	public void editCmsUser(Long id, CmsUser cmsUser) {
+		CmsUser cmsUserDb = getUserById(id);
+		cmsUserDb.setName(cmsUser.getName());
+		cmsUserDb.setEmail(cmsUser.getEmail());
+		cmsUserDb.setPhoneNumber(cmsUser.getPhoneNumber());
+		cmsUserRepository.save(cmsUserDb);
+		
+		ConstModel.setCmsUserLoggedIn(cmsUserDb);
+	}
+	
+	public boolean emailExists(String email, Long id) {
+		boolean emailExists = true;
+		CmsUser cmsUserDb = getUserById(id);
+		if (cmsUserDb.getEmail().equals(email)) {
+			emailExists = false;
+		}
+		
+		if (emailExists) {
+			emailExists = cmsUserRepository.findByEmail(email) == null ? false : true;
+		}
+		
+		return emailExists;
+	}
+	
+	public boolean phoneNumberExists(String phoneNumber, Long id) {
+		boolean phoneNumberExists = true;
+		CmsUser cmsUserDb = getUserById(id);
+		if (cmsUserDb.getEmail().equals(phoneNumber)) {
+			phoneNumberExists = false;
+		}
+		
+		if (phoneNumberExists) {
+			phoneNumberExists = cmsUserRepository.findByPhoneNumber(phoneNumber) == null ? false : true;
+		}
+		
+		return phoneNumberExists;
+	}
+	
+	public void loginSuccess(CmsUser cmsUser) {
+		cmsUser.setLastLoginAt(new Date());
+		cmsUser.setFailedLoginAttempt(0);
+		cmsUserRepository.save(cmsUser);
+		ConstModel.setCmsUserLoggedIn(cmsUser);
+	}
+	
+	public void loginFailed(CmsUser cmsUser) {
+		cmsUser.setFailedLoginAt(new Date());
+		Integer failedLoginAttempt = cmsUser.getFailedLoginAttempt();
+		failedLoginAttempt++;
+		cmsUser.setFailedLoginAttempt(failedLoginAttempt);
+		cmsUserRepository.save(cmsUser);
+	}
+	
+	public void lock(CmsUser cmsUser) {
+		cmsUser.setAccountNonLocked(false);
+		cmsUser.setLockTime(new Date());
+         
+        cmsUserRepository.save(cmsUser);
+    }
+	
+	public boolean unlockWhenTimeExpired(CmsUser cmsUser) {
+        long lockTimeInMillis = cmsUser.getLockTime().getTime();
+        long currentTimeInMillis = System.currentTimeMillis();
+         
+        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
+        	cmsUser.setAccountNonLocked(true);
+        	cmsUser.setLockTime(null);
+        	cmsUser.setFailedLoginAttempt(0);
+             
+            cmsUserRepository.save(cmsUser);
+             
+            return true;
+        }
+         
+        return false;
+    }
 	
 	public void checkUserCmsMenu(Long userId) {
 		TreeMap<String, ArrayList<CmsMenu>> cmsMenuMap = ConstModel.getUserCmsMenuMap();
@@ -57,9 +145,9 @@ public class CmsUserService {
 			}
 			
 			for (Entry<String, ArrayList<CmsMenu>> entry : cmsMenuMap.entrySet()) {
-				System.out.println("Group name = " + entry.getKey());
+//				System.out.println("Group name = " + entry.getKey());
 				for (CmsMenu cmsMenu : entry.getValue()) {
-					System.out.println("Menu name = " + cmsMenu.getName());
+//					System.out.println("Menu name = " + cmsMenu.getName());
 				}
 			}
 			ConstModel.setUserCmsMenuMap(cmsMenuMap);
@@ -75,7 +163,7 @@ public class CmsUserService {
 		if (userCmsPathArrayList.isEmpty()) {
 			List<String> cmsMenuList = cmsMenuRepository.findUrlMenuByUserId(userId);
 			userCmsPathArrayList.addAll(cmsMenuList);
-			ConstModel.userCmsPathArrayList(userCmsPathArrayList);
+			ConstModel.setUserCmsPathArrayList(userCmsPathArrayList);
 		}
 	}
 }

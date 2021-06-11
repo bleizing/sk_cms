@@ -25,8 +25,8 @@ public class CmsUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		CmsUser cmsUser = cmsUserService.findCmsUserByUsername(username);
 		
-		if (cmsUser == null || !cmsUser.getActive()) {
-	        throw new UsernameNotFoundException(username);
+		if (cmsUser == null) {
+			throw new UsernameNotFoundException(username);
 	    }
 		
 		List<GrantedAuthority> authorities = getUserAuthority(cmsUser.getCmsRole());
@@ -44,7 +44,7 @@ public class CmsUserDetailService implements UserDetailsService {
     }
 
     private UserDetails buildUserForAuthentication(CmsUser cmsUser, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(cmsUser.getUsername(), cmsUser.getPassword(), cmsUser.getActive(), true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User(cmsUser.getUsername(), cmsUser.getPassword(), cmsUser.getActive(), true, true, cmsUser.isAccountNonLocked(), authorities);
     }
 
 }

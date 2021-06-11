@@ -33,7 +33,7 @@
 
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="${/pages/user/profile?ratio=180x180}"
+									<a th:href="@{/pages/profile/edit(id=${cmsUser.id})}"
 										class="btn btn-default btn-flat">Profile</a>
 								</div>
 								<div class="pull-right">
