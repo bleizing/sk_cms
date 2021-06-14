@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
+import com.infosys.sejuta_kebaikan_cms.service.MerchantService;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 import com.infosys.sejuta_kebaikan_cms.util.CommonUtil;
 
@@ -28,9 +29,11 @@ public class ProfileController {
 	@Autowired
 	private CmsUserService cmsUserService;
 	
+	@Autowired
+	private MerchantService merchantService;
+	
 	@GetMapping("/edit")
 	public ModelAndView edit(@PathParam("id") Long id){
-		logger.info("edit profile");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView = CommonUtil.setModelAndView(modelAndView, null, "Edit Profile", "[profile]", "pages/profile/edit");
         
@@ -39,7 +42,6 @@ public class ProfileController {
 	
 	@PostMapping("/edit")
 	public ModelAndView saveEdit(@PathParam("id") Long id, @ModelAttribute("cmsUser") @Valid CmsUser cmsUser, BindingResult result) {
-		logger.info("save edit profile");
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String viewName = "redirect:/pages/dashboard";
@@ -56,10 +58,20 @@ public class ProfileController {
 			result.rejectValue("email", "error.email", "Email Sudah Terdaftar");
 		}
 		
+		if (cmsUser.getMerchant() != null) {
+			if (!CommonUtil.isValidUrlValue(cmsUser.getMerchant().getWebUrl())) {
+				result.rejectValue("merchant.webUrl", "error.merchant,webUrl", "Alamat URL Harus Tepat");
+			}
+			
+			if (merchantService.emailExists(cmsUser.getMerchant().getEmail(), cmsUser.getMerchant().getId())) {
+				result.rejectValue("merchant.email", "error.merchant.email", "Email Sudah Terdaftar");
+			}
+		}
+		
 		if (result.hasErrors()) {
-        	viewName = "pages/profile/edit";
-        	HashMap<String, Object> dataHashMap = new HashMap<>();
-        	dataHashMap.put("id", id);
+	        	viewName = "pages/profile/edit";
+	        	HashMap<String, Object> dataHashMap = new HashMap<>();
+	        	dataHashMap.put("id", id);
             modelAndView = CommonUtil.setModelAndView(modelAndView, dataHashMap, "Edit Profile", "[profile]", viewName);
             modelAndView.addObject("cmsUser", cmsUser);
 	    } else {

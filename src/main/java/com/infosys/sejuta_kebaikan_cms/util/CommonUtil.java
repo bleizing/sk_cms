@@ -141,4 +141,8 @@ public class CommonUtil {
 	public static boolean isValidNumberValue(String string) {
 		return string.matches("\\d+");
 	}
+	
+	public static boolean isValidUrlValue(String string) {
+		return string.matches("(http[s]?:\\/\\/)?([^\\/\\s]+\\/)(.*)");
+	}
 }

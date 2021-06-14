@@ -8,4 +8,7 @@ import com.infosys.sejuta_kebaikan_cms.model.Merchant;
 @Repository
 public interface MerchantRepository extends JpaRepository<Merchant, Long> {
 
+	Merchant findByIdAndActive(Long id, boolean active);
+	
+	Merchant findByEmail(String email);
 }

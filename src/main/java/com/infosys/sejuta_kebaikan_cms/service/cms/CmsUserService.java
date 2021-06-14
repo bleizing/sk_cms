@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
+import com.infosys.sejuta_kebaikan_cms.model.Merchant;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsGroupMenu;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsMenu;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
@@ -55,6 +56,18 @@ public class CmsUserService {
 		cmsUserDb.setName(cmsUser.getName());
 		cmsUserDb.setEmail(cmsUser.getEmail());
 		cmsUserDb.setPhoneNumber(cmsUser.getPhoneNumber());
+		
+		Merchant merchantDb = cmsUserDb.getMerchant();
+		if (merchantDb != null) {
+			Merchant merchant = cmsUser.getMerchant();
+			merchantDb.setName(merchant.getName());
+			merchantDb.setEmail(merchant.getEmail());
+			merchantDb.setDescription(merchant.getDescription());
+			merchantDb.setAddress(merchant.getAddress());
+			merchantDb.setCallCenter(merchant.getCallCenter());
+			merchantDb.setWebUrl(merchant.getWebUrl());
+		}
+		
 		cmsUserRepository.save(cmsUserDb);
 		
 		ConstModel.setCmsUserLoggedIn(cmsUserDb);
@@ -77,7 +90,7 @@ public class CmsUserService {
 	public boolean phoneNumberExists(String phoneNumber, Long id) {
 		boolean phoneNumberExists = true;
 		CmsUser cmsUserDb = getUserById(id);
-		if (cmsUserDb.getEmail().equals(phoneNumber)) {
+		if (cmsUserDb.getPhoneNumber().equals(phoneNumber)) {
 			phoneNumberExists = false;
 		}
 		
