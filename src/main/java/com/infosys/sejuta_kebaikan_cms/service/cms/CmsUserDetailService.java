@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsRole;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 
@@ -28,6 +29,8 @@ public class CmsUserDetailService implements UserDetailsService {
 		if (cmsUser == null) {
 			throw new UsernameNotFoundException(username);
 	    }
+		
+		ConstModel.setCmsUserLoggedIn(cmsUser);
 		
 		List<GrantedAuthority> authorities = getUserAuthority(cmsUser.getCmsRole());
         return buildUserForAuthentication(cmsUser, authorities);

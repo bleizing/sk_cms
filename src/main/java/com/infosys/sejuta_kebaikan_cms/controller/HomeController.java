@@ -20,7 +20,6 @@ public class HomeController {
 		
 	@GetMapping
 	public ModelAndView home(@PathParam("showAlert") Boolean showAlert, @PathParam("alertAction") String alertAction, @PathParam("alertTitle") String alertTitle, @PathParam("alertType") String alertType, @PathParam("alertMessage") String alertMessage){
-		logger.info("showAlert = " + showAlert);
         ModelAndView modelAndView = new ModelAndView();
         HashMap<String, Object> dataHashMap = new HashMap<>();
         if (showAlert != null && showAlert) {

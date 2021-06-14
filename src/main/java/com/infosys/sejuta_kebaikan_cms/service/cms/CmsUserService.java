@@ -92,7 +92,6 @@ public class CmsUserService {
 		cmsUser.setLastLoginAt(new Date());
 		cmsUser.setFailedLoginAttempt(0);
 		cmsUserRepository.save(cmsUser);
-		ConstModel.setCmsUserLoggedIn(cmsUser);
 	}
 	
 	public void loginFailed(CmsUser cmsUser) {

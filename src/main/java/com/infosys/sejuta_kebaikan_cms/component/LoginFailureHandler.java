@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 
@@ -23,9 +24,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     
    @Override
    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-       String username = request.getParameter("username");
-       CmsUser cmsUser = cmsUserService.findCmsUserByUsername(username);
-       
+	   CmsUser cmsUser = ConstModel.getCmsUserLoggedIn();
        if (cmsUser != null) {
            if (cmsUser.isAccountNonLocked()) {
         	   // Max Attemp to Failed Login
@@ -42,6 +41,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 //               }
            }
        }
+       ConstModel.setCmsUserLoggedIn(null);
        
        super.setDefaultFailureUrl("/login?error");
        super.onAuthenticationFailure(request, response, exception);

@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.infosys.sejuta_kebaikan_cms.constant.ConstModel;
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 
@@ -25,8 +26,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
      
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-    	String username = authentication.getName();
-    	CmsUser cmsUser = cmsUserService.findCmsUserByUsername(username);
+    	CmsUser cmsUser = ConstModel.getCmsUserLoggedIn();
     	if (cmsUser.getActive() && cmsUser.isAccountNonLocked()) {
 			cmsUserService.loginSuccess(cmsUser);
 		}
