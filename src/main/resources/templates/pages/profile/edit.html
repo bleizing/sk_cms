@@ -40,7 +40,7 @@
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="name">Deskripsi Merchant</label>
-		      		<textarea class="form-control" id="description" placeholder="Deskripsi" th:field="*{merchant.description}" />
+		      		<textarea rows="5" class="form-control" id="description" placeholder="Deskripsi" th:field="*{merchant.description}" />
 		      		<p th:if="${#fields.hasErrors('merchant.description')}" th:errors="*{merchant.description}" th:class="error"></p>
 			  	</div>
 			  	<div class="form-group">
