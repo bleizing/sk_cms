@@ -66,6 +66,7 @@ public class CmsUserService {
 			merchantDb.setAddress(merchant.getAddress());
 			merchantDb.setCallCenter(merchant.getCallCenter());
 			merchantDb.setWebUrl(merchant.getWebUrl());
+			merchantDb.setLogo(merchant.getLogo());
 		}
 		
 		cmsUserRepository.save(cmsUserDb);

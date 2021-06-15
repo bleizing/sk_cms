@@ -1,5 +1,6 @@
 package com.infosys.sejuta_kebaikan_cms.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.validation.Valid;
@@ -8,16 +9,20 @@ import javax.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.infosys.sejuta_kebaikan_cms.model.cms.CmsUser;
 import com.infosys.sejuta_kebaikan_cms.service.MerchantService;
+import com.infosys.sejuta_kebaikan_cms.service.MinioAdapter;
 import com.infosys.sejuta_kebaikan_cms.service.cms.CmsUserService;
 import com.infosys.sejuta_kebaikan_cms.util.CommonUtil;
 
@@ -32,6 +37,9 @@ public class ProfileController {
 	@Autowired
 	private MerchantService merchantService;
 	
+	@Autowired
+    MinioAdapter minioAdapter;
+	
 	@GetMapping("/edit")
 	public ModelAndView edit(@PathParam("id") Long id){
         ModelAndView modelAndView = new ModelAndView();
@@ -40,8 +48,8 @@ public class ProfileController {
         return modelAndView;
     }
 	
-	@PostMapping("/edit")
-	public ModelAndView saveEdit(@PathParam("id") Long id, @ModelAttribute("cmsUser") @Valid CmsUser cmsUser, BindingResult result) {
+	@PostMapping(path = "/edit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ModelAndView saveEdit(@PathParam("id") Long id, @ModelAttribute("cmsUser") @Valid CmsUser cmsUser, @RequestPart(value = "logo_merchant", required = false) MultipartFile files, BindingResult result) throws IOException {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String viewName = "redirect:/pages/dashboard";
@@ -65,6 +73,12 @@ public class ProfileController {
 			
 			if (merchantService.emailExists(cmsUser.getMerchant().getEmail(), cmsUser.getMerchant().getId())) {
 				result.rejectValue("merchant.email", "error.merchant.email", "Email Sudah Terdaftar");
+			}
+			
+			if (files != null && !files.isEmpty()) {
+				minioAdapter.uploadFile("logo_merchants/" + files.getOriginalFilename(), files.getBytes());
+				String filename = minioAdapter.getPath() + "logo_merchants/" + files.getOriginalFilename();
+				cmsUser.getMerchant().setLogo(filename);
 			}
 		}
 		

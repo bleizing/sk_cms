@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="col" layout:fragment="content">
-		<form action="#" th:action="@{/pages/profile/edit(id=${#httpServletRequest.getParameter('id')})}" method="post" th:object="${cmsUser}">
+		<form action="#" th:action="@{/pages/profile/edit(id=${#httpServletRequest.getParameter('id')})}" method="post" th:object="${cmsUser}" enctype="multipart/form-data">
 			<div class="form-group">
 		    	<label for="username">Username</label>
 	      		<input type="username" class="form-control" id="username" placeholder="Username" th:field="*{username}" readonly>
@@ -58,6 +58,7 @@
 		      		<input type="text" class="form-control" id="web-url" placeholder="Web URL" th:field="*{merchant.webUrl}">
 		      		<p th:if="${#fields.hasErrors('merchant.webUrl')}" th:errors="*{merchant.webUrl}" th:class="error"></p>
 			  	</div>
+			  	<input type="file" name="logo_merchant" id="logo_merchant" /> <br/>
 			  	<input type="hidden" th:field="*{merchant.id}" />
 		  	</div>
 		  	
