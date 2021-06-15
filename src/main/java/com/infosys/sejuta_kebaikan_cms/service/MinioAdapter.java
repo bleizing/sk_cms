@@ -60,7 +60,7 @@ public class MinioAdapter {
     
     private void checkBucketExists() {
 		try {
-			if (minioClient.bucketExists(BucketExistsArgs.builder().bucket(defaultBucketName).build())) {
+			if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(defaultBucketName).build())) {
 				minioClient.makeBucket(MakeBucketArgs.builder().bucket(defaultBucketName).build());
 			}
 		} catch (InvalidKeyException | ErrorResponseException | InsufficientDataException | InternalException
@@ -103,7 +103,7 @@ public class MinioAdapter {
             InputStream inputStream = minioClient.getObject(
                     GetObjectArgs.builder()
                             .bucket(defaultBucketName)
-                            .object(fullPathFileName)
+                            .object(defaultBaseFolder + fullPathFileName)
                             .build());
 
             byte[] bytes = IOUtils.toByteArray(inputStream);

@@ -58,12 +58,28 @@
 		      		<input type="text" class="form-control" id="web-url" placeholder="Web URL" th:field="*{merchant.webUrl}">
 		      		<p th:if="${#fields.hasErrors('merchant.webUrl')}" th:errors="*{merchant.webUrl}" th:class="error"></p>
 			  	</div>
-			  	<input type="file" name="logo_merchant" id="logo_merchant" /> <br/>
+			  	<input type="file" class="dropify" name="logo_merchant" id="logo_merchant" /> <br/>
 			  	<input type="hidden" th:field="*{merchant.id}" />
 		  	</div>
 		  	
 		  	<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>
+	<script layout:fragment="script-footer" th:inline="javascript">
+		var logoUrl = [[${cmsUser.merchant.logo}]];
+		console.log(logoUrl);
+		
+		var imagenUrl = "";
+		var drEvent = $('#logo_merchant').dropify(
+		{
+		  defaultFile: logoUrl
+		});
+		drEvent = drEvent.data('dropify');
+		drEvent.resetPreview();
+		drEvent.clearElement();
+		drEvent.settings.defaultFile = logoUrl;
+		drEvent.destroy();
+		drEvent.init();
+	</script>
 </body>
 </html>
