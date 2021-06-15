@@ -58,7 +58,7 @@
 		      		<input type="text" class="form-control" id="web-url" placeholder="Web URL" th:field="*{merchant.webUrl}">
 		      		<p th:if="${#fields.hasErrors('merchant.webUrl')}" th:errors="*{merchant.webUrl}" th:class="error"></p>
 			  	</div>
-			  	<input type="file" class="dropify" name="logo_merchant" id="logo_merchant" /> <br/>
+			  	<input type="file" class="dropify" name="logo_merchant" id="logo_merchant" data-show-remove="false" /> <br/>
 			  	<input type="hidden" th:field="*{merchant.id}" />
 		  	</div>
 		  	
